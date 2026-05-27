@@ -2,6 +2,7 @@
 #include "geometric_primitive.h"
 #include "Engine/Resources/Shader.h"
 #include <vector>
+#include "Engine/Core/EnginePaths.h"
 
 GeometricPrimitive::GeometricPrimitive(ID3D11Device* device)
 {
@@ -15,9 +16,10 @@ GeometricPrimitive::GeometricPrimitive(ID3D11Device* device)
 		  D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
-	CreateVertexShaderFromCSO(device, "./Data/Shaders/geometric_primitive_vs.cso", vertex_shader.GetAddressOf(),
+	std::string dir = EnginePaths::ShadersDataDir;
+	CreateVertexShaderFromCSO(device, (dir + "geometric_primitive_vs.cso").c_str(), vertex_shader.GetAddressOf(),
 		input_layout.GetAddressOf(), input_element_desc, ARRAYSIZE(input_element_desc));
-	CreatePixelShaderFromCSO(device, "./Data/Shaders/geometric_primitive_ps.cso", pixel_shader.GetAddressOf());
+	CreatePixelShaderFromCSO(device, (dir + "geometric_primitive_ps.cso").c_str(), pixel_shader.GetAddressOf());
 
 	D3D11_BUFFER_DESC buffer_desc{};
 	buffer_desc.ByteWidth = sizeof(Constants);

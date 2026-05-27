@@ -58,6 +58,7 @@ void RenderSystem::Render()
             //新カメラシステム
 #ifdef _DEBUG
             {
+                ProfileScopedSection_2(0, "SceneView::Rendering", ImGuiControl::Profiler::Yellow);
                 // エディタビュー用の描画処理
                 cameraPos = EditorCamera::GetPosition();
                 View = EditorCamera::GetViewMatrix();
@@ -86,6 +87,7 @@ void RenderSystem::Render()
 #endif // DEBUG
             {
                 // ゲームビュー用の描画処理
+                ProfileScopedSection_2(0, "GameView::Rendering", ImGuiControl::Profiler::Purple);
                 auto* cam = scene->cameraSystem.GetMainCamera();
                 if (cam)
                 {

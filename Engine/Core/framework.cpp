@@ -267,6 +267,7 @@ void Framework::Update(float deltaTime/*Elapsed seconds from last frame*/)
     // 入力システム更新
     if (GetForegroundWindow() == Graphics::GetHwnd())
     {
+        ProfileScopedSection_2(0, "InputSystem::Update", ImGuiControl::Profiler::Green);
         InputSystem::Update(Time::UnscaledDeltaTime());
     }
 #ifdef _DEBUG
@@ -280,6 +281,7 @@ void Framework::Update(float deltaTime/*Elapsed seconds from last frame*/)
     // イベントシステム更新
     if ((SceneManager::GetCurrentScene() && SceneManager::GetCurrentScene()->IsStarted()) && SceneManager::state == SceneManager::State::Playing)
     {
+        ProfileScopedSection_2(0, "EventSystem::Update", ImGuiControl::Profiler::Yellow);
         EventSystem::Update(Time::UnscaledDeltaTime());
     }
 
@@ -294,6 +296,7 @@ void Framework::Update(float deltaTime/*Elapsed seconds from last frame*/)
 
     // シーン更新
     {
+        ProfileScopedSection_2(0, "SceneManager::Update", ImGuiControl::Profiler::Red);
         SceneManager::Update(deltaTime);
     }
 
@@ -307,6 +310,7 @@ void Framework::Update(float deltaTime/*Elapsed seconds from last frame*/)
 	// エディタカメラ更新
 #ifdef _DEBUG
     {
+        ProfileScopedSection_2(0, "EditorCamera::Update", ImGuiControl::Profiler::Green);
         EditorCamera::Update(deltaTime);
     }
 #endif // _DEBUG

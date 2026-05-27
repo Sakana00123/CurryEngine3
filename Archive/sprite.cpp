@@ -3,7 +3,7 @@
 #include "Engine/Core/Misc.h"
 #include "Engine/Resources/Texture.h"
 #include "Engine/Resources/Shader.h"
-
+#include "Engine/Core/EnginePaths.h"
 
 Sprite::Sprite(ID3D11Device* device)
 {
@@ -51,14 +51,12 @@ Sprite::Sprite(ID3D11Device* device)
         D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
     };
     //頂点シェーダーオブジェクトの生成
-    const char* cso_name{ "./Data/Shaders/sprite_vs.cso" };
-
-    hr = CreateVertexShaderFromCSO(device, cso_name, vertex_shader.GetAddressOf(), input_layout.GetAddressOf(), input_element_desc, _countof(input_element_desc));
+	std::string dir = EnginePaths::ShadersDataDir;
+    hr = CreateVertexShaderFromCSO(device, (dir + "sprite_vs.cso").c_str(), vertex_shader.GetAddressOf(), input_layout.GetAddressOf(), input_element_desc, _countof(input_element_desc));
     _ASSERT_EXPR(SUCCEEDED(hr), HrTrace(hr));
 
     //ピクセルシェーダーオブジェクトの生成
-    const char* ps_name{ "./Data/Shaders/debug_ps.cso" };
-    hr = CreatePixelShaderFromCSO(device, ps_name, pixel_shader.GetAddressOf());
+    hr = CreatePixelShaderFromCSO(device, (dir + "debug_ps.cso").c_str(), pixel_shader.GetAddressOf());
     _ASSERT_EXPR(SUCCEEDED(hr), HrTrace(hr));
 }
 
@@ -104,16 +102,13 @@ Sprite::Sprite(ID3D11Device* device, const wchar_t* filename)
         {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
         D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
     };
-
     //頂点シェーダーオブジェクトの生成
-    const char* cso_name{ "./Data/Shaders/sprite_vs.cso" };
-    hr = CreateVertexShaderFromCSO(device, cso_name, vertex_shader.GetAddressOf(), input_layout.GetAddressOf(), input_element_desc, _countof(input_element_desc));
+    std::string dir = EnginePaths::ShadersDataDir;
+    hr = CreateVertexShaderFromCSO(device, (dir + "sprite_vs.cso").c_str(), vertex_shader.GetAddressOf(), input_layout.GetAddressOf(), input_element_desc, _countof(input_element_desc));
     _ASSERT_EXPR(SUCCEEDED(hr), HrTrace(hr));
 
     //ピクセルシェーダーオブジェクトの生成
-    const char* ps_name{ "./Data/Shaders/sprite_ps.cso" };
-
-    hr = CreatePixelShaderFromCSO(device, ps_name, pixel_shader.GetAddressOf());
+    hr = CreatePixelShaderFromCSO(device, (dir + "sprite_ps.cso").c_str(), pixel_shader.GetAddressOf());
     _ASSERT_EXPR(SUCCEEDED(hr), HrTrace(hr));
 }
 
