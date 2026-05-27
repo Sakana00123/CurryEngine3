@@ -201,7 +201,7 @@ void Enemy::TakeDamage(int damage)
 	//EffectManager::Play(hitEffectHandle, gameObject->transform->GetWorldPosition());
 
 	//// 攻撃音再生
-	//Audio::PlayOneShot(L"./Data/Sounds/SE/hit.wav");
+	//Audio::PlayOneShot(L"./Assets/Sounds/SE/hit.wav");
 
 	if (currentHealth <= 0)
 	{
@@ -217,9 +217,9 @@ void Enemy::OnHit(const TriggerInfo& info)
 		if (CharacterMovement* character = characterObj->GetComponent<CharacterMovement>())
 		{
 			// ダメージエフェクト再生
-			EffectManager::Play(hitEffectHandle, Vector3(info.otherCollider->GetTransform()->GetWorldPosition()));
+			int instanceId = EffectManager::Play(hitEffectHandle, Vector3(info.otherCollider->GetTransform()->GetWorldPosition()));
 			// 攻撃音再生
-			Audio::PlayOneShot(L"./Data/Sounds/SE/damage.wav");
+			Audio::PlayOneShot(L"./Assets/Sounds/SE/damage.wav");
 
 			character->TakeDamage(attackPower);
 			info.selfCollider->SetEnabled(false);

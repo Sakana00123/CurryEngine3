@@ -265,8 +265,8 @@ void CharacterMovement::Update(float deltaTime)
 	{
 		if (BeatManager::IsJustBeat())
 		{
-			EffectManager::Play(dodgeEffectHandle, GetOwner()->transform->GetPosition(), GetOwner()->transform->GetEulerAngles());
-			//Audio::PlayOneShot(L"./Data/Sounds/SE/kick.wav");
+			int instanceId = EffectManager::Play(dodgeEffectHandle, GetOwner()->transform->GetPosition(), GetOwner()->transform->GetEulerAngles());
+			//Audio::PlayOneShot(L"./Assets/Sounds/SE/kick.wav");
 
 		}
 	}
@@ -364,7 +364,7 @@ void CharacterMovement::UpdateAnimation(float deltaTime)
 				renderer->SetAnimationTimeRate(1.0f);
 				renderer->animationBlendTime = 0.05f;
 				renderer->SetLoop(false);
-				Audio::PlayOneShot(L"./Data/Sounds/SE/box.wav");
+				Audio::PlayOneShot(L"./Assets/Sounds/SE/box.wav");
 				// 攻撃エフェクト再生
 				//EffectManager::Play(attackEffectHandle, gameObject->transform->GetPosition(), gameObject->transform->GetEulerAngles());
 				if (ParticleComponent* effect = GetOwner()->GetComponentInChildren<ParticleComponent>())
@@ -375,7 +375,7 @@ void CharacterMovement::UpdateAnimation(float deltaTime)
 
 				if (BeatManager::CheckBeatTiming() == BeatResult::Perfect)
 				{
-					Audio::PlayOneShot(L"./Data/Sounds/SE/punch.wav");
+					Audio::PlayOneShot(L"./Assets/Sounds/SE/punch.wav");
 				}
 
 				// 攻撃判定を有効化
@@ -414,12 +414,12 @@ void CharacterMovement::UpdateAnimation(float deltaTime)
 				
 				
 					// 回避エフェクト再生
-					EffectManager::Play(dodgeEffectHandle, GetOwner()->transform->GetPosition(), GetOwner()->transform->GetEulerAngles());
+					int instanceId = EffectManager::Play(dodgeEffectHandle, GetOwner()->transform->GetPosition(), GetOwner()->transform->GetEulerAngles());
 				
 				
 					if (isPerfect)
 					{
-						Audio::PlayOneShot(L"./Data/Sounds/SE/dodge.wav");
+						Audio::PlayOneShot(L"./Assets/Sounds/SE/dodge.wav");
 					}
 				}
 				
@@ -453,10 +453,10 @@ void CharacterMovement::OnAttack(const TriggerInfo& info)
 		if (Enemy* enemy = enemyObj->GetComponent<Enemy>())
 		{
 			// 攻撃エフェクト再生
-			EffectManager::Play(damageEffectHandle, info.otherCollider->GetTransform()->GetWorldPosition());
+			int instanceId = EffectManager::Play(damageEffectHandle, info.otherCollider->GetTransform()->GetWorldPosition());
 
 			// 攻撃音再生
-			Audio::PlayOneShot(L"./Data/Sounds/SE/hit.wav");
+			Audio::PlayOneShot(L"./Assets/Sounds/SE/hit.wav");
 
 			// 敵にダメージを与える処理など
 			enemy->TakeDamage(attackPower); // 例: 20のダメージを与える
