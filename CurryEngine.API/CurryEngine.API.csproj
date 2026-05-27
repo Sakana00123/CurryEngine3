@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+	<AssemblyName>CurryEngine.API</AssemblyName>
+	<RootNamespace>CurryEngine</RootNamespace>
+	<Nullable>enable</Nullable>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(OutDir)CurryEngine.API.dll" DestinationFolder="$(MSBuildProjectDirectory)\..\x64\$(Configuration)\" />
+	</Target>
+</Project>
