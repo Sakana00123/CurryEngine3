@@ -54,9 +54,7 @@ Framework::Framework(HWND hwnd)
 
 	Physics::Initialize();
 
-#ifdef _DEBUG
-    //ScriptSystem::Initialize();
-#endif // _DEBUG
+    ScriptSystem::Initialize();
 
     AssetBrowser::Initialize();
     AssetBrowser::InitializeDropTarget(hwnd);
@@ -344,10 +342,8 @@ bool Framework::Uninitialize(HWND hwnd)
     // レンダリングシステム終了
 	renderSystem->Finalize();
 
-#ifdef _DEBUG
     // スクリプトシステム終了
-    //ScriptSystem::Shutdown();
-#endif // _DEBUG
+    ScriptSystem::Shutdown();
 
     //プロファイラ終了
     ProfileShutdown();

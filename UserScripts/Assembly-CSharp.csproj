@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
-    <BaseOutputPath></BaseOutputPath>
+	<BaseOutputPath>$(SolutionDir)</BaseOutputPath>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   
