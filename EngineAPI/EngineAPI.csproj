@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y &quot;$(SolutionDir)x64\Release\net9.0\CurryEngine.Runtime.dll&quot; &quot;$(SolutionDir)x64\$(Configuration)\&quot;&#xD;&#xA;xcopy /y &quot;$(SolutionDir)x64\Release\net9.0\CurryEngine.Runtime.runtimeconfig.json&quot; &quot;$(SolutionDir)x64\$(Configuration)\&quot;" />
+    <Exec Command="xcopy /y &quot;$(SolutionDir)x64\$(Configuration)\net9.0\CurryEngine.Runtime.dll&quot; &quot;$(SolutionDir)x64\$(Configuration)\&quot;&#xD;&#xA;xcopy /y &quot;$(SolutionDir)x64\$(Configuration)\net9.0\CurryEngine.Runtime.runtimeconfig.json&quot; &quot;$(SolutionDir)x64\$(Configuration)\&quot;" />
   </Target>
 
 </Project>
