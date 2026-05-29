@@ -67,22 +67,17 @@ private:
      * @details ImGui のインスペクタから設定され、クリック時に `pFunc` が実行されます。
      */
     struct EventInfo {
-        /** @brief 対象となる `GameObject`。`nullptr` の場合は無効。 */
-        GameObject* pObj = nullptr;
-        /**
-         * @brief 機能ID。
-         * - 0: 何もしない（"No Function"）
-         * - 1: `GameObject::SetActive(bool)` を呼び出す（"SetActive"）
-         */
-        int funcId = 0;
-        /**
-         * @brief 実行用関数オブジェクト。
-         * @details `UpdateInfo` により `funcId` に応じて設定されます。無効な場合は `nullptr`。
-         */
-        std::function<void()> pFunc;
-        /** @brief 機能に渡すフラグ。`SetActive` の引数として使用。 */
-        bool flag = false;
-        // std::any value; ///< 将来的な拡張用の値
+		/** @brief 対象となるObjectのID。インスペクタで設定されます。 */
+		ObjectId objReference = ObjectId::Invalid();
+		std::string className;                             ///< 対象となるクラス名。
+		std::string funcName;                              ///< 実行する関数名。
+		std::pair<std::string, std::any> value; ///< 型と値のペアの配列。関数引数などに使用します。
+
+        bool IsValid() const {
+			if (objReference == ObjectId::Invalid() && className.empty() && funcName.empty())
+				return false;
+			return true;
+		}
     };
 
     /** @brief インスペクタで設定したイベント情報の配列。 */
@@ -246,6 +241,20 @@ public:
     void SetOnUpdateSelectEvent(const std::function<void()>& func) {
         onUpdateSelectFunction = func;
 	}
+
+    /**
+     * @brief オブジェクトの状態を JSON 形式でシリアライズします。
+     * @return シリアライズされた JSON オブジェクト。
+     * @details `eventInfo` の内容も含めてシリアライズします。
+	 */
+	json Serialize() const override;
+
+    /**
+     * @brief JSON 形式のデータからオブジェクトの状態を復元します。
+     * @param j 復元元の JSON オブジェクト。
+     * @details `eventInfo` の内容も含めて復元します。
+	 */
+	void Deserialize(const json& j) override;
 
 private:
     /**

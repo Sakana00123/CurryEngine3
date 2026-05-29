@@ -244,6 +244,9 @@ std::vector<ClassInfo> Parser::ExtractClasses(const std::string& text)
         // フィールドを抽出
         ExtractFields(text, classPos, info);
 
+		// メソッドを抽出
+		ExtractMethods(text, classPos, info);
+
         // JSON 出力
         std::string outPath = outputDirectory + "/" + info.name + ".json";
         WriteJson(info, outPath);
@@ -306,6 +309,62 @@ void Parser::ExtractFields(const std::string& text, size_t classPos, ClassInfo& 
     }
 }
 
+void Parser::ExtractMethods(const std::string& text, size_t classPos, ClassInfo& info)
+{
+	size_t pos = classPos;
+
+    while (true)
+    {
+        // C_FUNCTION() を探す
+        pos = text.find("C_FUNCTION", pos);
+        if (pos == std::string::npos) break;
+        // 次の行を取得
+        size_t lineStart = text.find('\n', pos);
+        if (lineStart == std::string::npos) break;
+        lineStart++;
+        size_t lineEnd = text.find(';', lineStart);
+        if (lineEnd == std::string::npos) break;
+        std::string line = text.substr(lineStart, lineEnd - lineStart);
+        Trim(line);
+
+        // メソッドの戻り値、名前、引数を抽出
+        std::regex methodRegex(R"(([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+)\s*\((.*)\))"); // 戻り値、名前、引数の正規表現(例: void myMethod(int a, float b))
+        std::smatch m;
+        if (!std::regex_search(line, m, methodRegex))
+        {
+            std::cout << "  Warning: Could not parse method line: " << line << "\n";
+            pos = lineEnd;
+            continue; // マッチしなければ次へ
+        }
+
+        // マッチした場合
+        std::cout << "  Method found: " << m[1].str() << " " << m[2].str() << ", args: " << m[3].str() << "\n";
+        // 戻り値、名前、引数を取得
+        MethodInfo method;
+        method.returnType = m[1].str();
+        method.name = m[2].str();
+        // 引数を分割して型と名前を抽出
+        std::string argsStr = m[3].str();
+        std::regex argRegex(R"(([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+))"); // 引数の型と名前の正規表現(例: int a)
+        auto aIt = std::sregex_iterator(argsStr.begin(), argsStr.end(), argRegex);
+        auto aEnd = std::sregex_iterator();
+        for (; aIt != aEnd; ++aIt)
+        {
+            std::string argType = (*aIt)[1].str();
+            std::string argName = (*aIt)[2].str();
+            method.parameters.emplace_back(argType, argName);
+            std::cout << "    Parameter: " << argType << " " << argName << "\n";
+        }
+        // メソッド情報を追加
+        info.methods.push_back(method);
+        // 次の位置へ
+        pos = lineEnd;
+
+    }
+
+
+}
+
 std::pair<size_t, size_t> Parser::FindClassBlock(const std::string& text, size_t classPos)
 {
     size_t braceOpenPos = text.find('{', classPos);
@@ -357,95 +416,20 @@ void Parser::WriteJson(const ClassInfo& info, const std::string& outPath)
         }
 		fieldJson["attributes"] = attrArray;
     }
+    for (const auto& m : info.methods)
+	{
+        auto& methodJson = j["methods"].emplace_back();
+        methodJson["returnType"] = m.returnType;
+        methodJson["name"] = m.name;
+        nlohmann::json paramArray = nlohmann::json::array();
+        for (const auto& param : m.parameters)
+        {
+            auto& paramJson = paramArray.emplace_back();
+            paramJson["type"] = param.first;
+            paramJson["name"] = param.second;
+        }
+        methodJson["parameters"] = paramArray;
+	}
 	std::cout << "Writing JSON to: " << outPath << std::endl;
     std::ofstream(outPath) << j.dump(2);
 }
-
-
-//void Parser::ParseHeader(const std::string& path)
-//{
-//	std::ifstream ifs(path);
-//	if (!ifs.is_open())
-//	{
-//		throw std::runtime_error("Failed to open file: " + path);
-//	}
-//
-//	current = ClassInfo();
-//
-//	std::string line;
-//	bool insideClass = false;
-//
-//    std::regex classRegex(R"(class\s+([A-Za-z0-9_]+))");
-//	std::regex fieldRegex(R"(([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+)\s*;)");
-//
-//    while (std::getline(ifs, line)) {
-//        line = RemoveComments(line);
-//
-//        if (!insideClass) {
-//			// クラス開始検出
-//            std::smatch m;
-//            if (std::regex_search(line, m, classRegex)) {
-//                insideClass = true;
-//                current.name = m[1];
-//                current.base = m[2];
-//				//std::cout << "Found class: " << current.name << " (base: " << current.base << ")" << std::endl;
-//                continue;
-//            }
-//        }
-//        else {
-//			// クラス終了検出
-//            if (line.find("};") != std::string::npos) {
-//                insideClass = false;
-//                if (current.reflect)
-//                {
-//	                classes[current.name] = current;
-//					std::cout << "  Class " << current.name << " registered with " << current.fields.size() << " fields." << std::endl;
-//                }
-//                continue;
-//            }
-//
-//            // forward declaration の行を無視する
-//            if (std::regex_match(line, std::regex(R"(^\s*(class|struct|enum)\s+[A-Za-z_][A-Za-z0-9_]*\s*;\s*$)"))) {
-//                continue; // これはフィールドではない
-//            }
-//
-//			// REFLECT() マクロ検出
-//            if (line.find("REFLECT()") != std::string::npos) {
-//                current.reflect = true;
-//				std::cout << "  REFLECT found" << std::endl;
-//                continue;
-//            }
-//
-//            // 関数行除外
-//            if (line.find('(') != std::string::npos) continue;
-//
-//			// フィールド解析
-//            std::smatch m;
-//            if (std::regex_search(line, m, fieldRegex)) {
-//                FieldInfo f{ m[1], m[2] };
-//                current.fields.push_back(f);
-//				//std::cout << "  Field: " << f.type << " " << f.name << std::endl;
-//            }
-//        }
-//    }
-//}
-
-//void Parser::ExportJson(const std::string& outPath)
-//{
-//    nlohmann::json j;
-//
-//    for (auto& [name, c] : ) {
-//        nlohmann::json jc;
-//        jc["base"] = c.base;
-//        for (auto& f : c.fields) {
-//            jc["fields"].push_back({
-//                {"type", f.type},
-//                {"name", f.name}
-//                });
-//        }
-//        j[name] = jc;
-//		std::cout << "Exporting class: " << name << std::endl;
-//    }
-//	std::cout << "Writing JSON to: " << outPath << std::endl;
-//    std::ofstream(outPath) << j.dump(2);
-//}

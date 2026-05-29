@@ -154,10 +154,19 @@ protected:
 	/** @brief 所有者 `GameObject` を設定（エンジン内部用）。*/
 	void SetOwner(GameObject* gameObject) { this->gameObject = gameObject; }
 
+public:
 	/** @brief 所有者 `GameObject` の一意識別子を設定（エンジン内部用）。*/
+	C_FUNCTION()
 	void SetOwnerId(ObjectId ownerId) { this->ownerId = ownerId; }
 
+	C_FUNCTION()
 	ObjectId GetOwnerId() const { return ownerId; }
+
+	C_FUNCTION()
+	void ChangeEnable() { SetEnabled(true); }
+
+	C_FUNCTION()
+	void ChangeDisable() { SetEnabled(false); }
 	
 private:
 	friend class ComponentFactory;

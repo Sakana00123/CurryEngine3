@@ -17,11 +17,20 @@ struct FieldInfo
 	std::vector<AttributeInfo> attributes;
 };
 
+struct MethodInfo
+{
+	std::string returnType;
+	std::string name;
+	std::vector<std::pair<std::string, std::string>> parameters; // type, name
+	std::vector<AttributeInfo> attributes;
+};
+
 struct ClassInfo
 {
 	std::string name;
 	std::vector<std::string> bases;
 	std::vector<FieldInfo> fields;
+	std::vector<MethodInfo> methods;
 	bool reflect = false;
 };
 
@@ -40,6 +49,7 @@ public:
 	FileInfo ParseFile(const std::string& filePath);
 	std::vector<ClassInfo> ExtractClasses(const std::string& text);
 	void ExtractFields(const std::string& text, size_t classPos, ClassInfo& info);
+	void ExtractMethods(const std::string& text, size_t classPos, ClassInfo& info);
 
 	std::pair<size_t, size_t> FindClassBlock(const std::string& text, size_t classPos);
 	bool ContainsReflectMacro(const std::string& text, size_t begin, size_t end);

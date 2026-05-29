@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <any>
+#include <functional>
 #include <unordered_map>
 #include <typeindex>
 #include "Engine/EditorSupport/AutoRegisterComponent.h"
@@ -19,6 +21,10 @@
  */
 #define C_PROPERTY(...) \
 public:
+
+ // C_FUNCTION マクロをメソッド宣言の前に付けると、そのメソッドがリフレクションシステムに登録されます。引数で属性も指定可能。
+#define C_FUNCTION(...) \
+
 
 // ----------------- C_PROPERTYマクロ内に書ける属性 -----------------
 namespace CurryEngine
@@ -96,12 +102,58 @@ struct PropertyInfo
 	}
 };
 
+// メソッドのメタ情報
+struct MethodInfo
+{
+	std::string returnType;
+	std::string name;
+	std::vector<std::pair<std::string, std::string>> parameters; // (型, 名前)のペア
+	std::vector<AttributeInfo> attributes{};
+
+	// メソッド呼び出し用の関数オブジェクト。引数は (インスタンスポインタ, 引数のanyベクター) で、戻り値は any。
+	std::function<std::any(void* instance, std::vector<std::any> args)> invoker;
+
+	// 戻り値あり
+	std::any Invoke(void* instance, std::vector<std::any> args = {}) const;
+
+	// 戻り値なし（void）
+	void InvokeVoid(void* instance, std::vector<std::any> args = {}) const;
+
+	// 戻り値を型指定してキャスト
+	template <typename TRet>
+	TRet InvokeAs(void* instance, std::vector<std::any> args = {}) const {
+		std::any result = Invoke(instance, args);
+		if (result.has_value())
+		{
+			try
+			{
+				return std::any_cast<TRet>(result);
+			}
+			catch (const std::bad_any_cast& e)
+			{
+				Console::LogError("Failed to cast method return value: " + std::string(e.what()));
+			}
+		}
+		else
+		{
+			Console::LogError("Method did not return a value.");
+		}
+	}
+};
+
 // クラスのメタ情報
 struct ClassMeta
 {
 	std::string name;
 	std::vector<std::string> bases;
 	std::vector<PropertyInfo> properties;
+	std::vector<MethodInfo> methods;
+
+	// 基底クラスを再帰的に検索してプロパティを取得する関数
+	const PropertyInfo* FindProperty(const std::string& propName) const;
+
+	// 基底クラスを再帰的に検索してメソッドを取得する関数
+	const MethodInfo* FindMethod(const std::string& methodName) const;
 };
 
 // ---- リフレクション登録システム ----
@@ -116,6 +168,67 @@ public:
 private:
 	static std::unordered_map<std::string, ClassMeta>& GetRegistry();
 };
+
+// -------------------------- ヘルパー関数 ---------------------
+
+// 汎用ヘルパー
+template <typename T>
+T AnyCast(const std::any& a)
+{
+	return std::any_cast<T>(a);
+}
+
+// メンバ関数ポインタ → invoker 変換
+template <typename TClass, typename TRet, typename... TArgs, std::size_t... I>
+auto MakeInvokerImpl(TRet (TClass::*fn)(TArgs...), std::index_sequence<I...>)
+{
+	return [fn](void* instance, std::vector<std::any> args) -> std::any
+	{
+		TClass* obj = static_cast<TClass*>(instance);
+		if constexpr (std::is_void_v<TRet>)
+		{
+			(obj->*fn)(AnyCast<TArgs>(args[I])...);
+			return {};
+		}
+		else
+		{
+			return (obj->*fn)(AnyCast<TArgs>(args[I])...);
+		}
+	};
+}
+// const メンバ関数オーバーロード
+template <typename TClass, typename TRet, typename... TArgs, std::size_t... I>
+auto MakeInvokerImpl(TRet (TClass::*fn)(TArgs...) const, std::index_sequence<I...>)
+{
+	return [fn](void* instance, std::vector<std::any> args) -> std::any
+	{
+		const TClass* obj = static_cast<const TClass*>(instance);
+		if constexpr (std::is_void_v<TRet>)
+		{
+			(obj->*fn)(AnyCast<TArgs>(args[I])...);
+			return {};
+		}
+		else
+		{
+			return (obj->*fn)(AnyCast<TArgs>(args[I])...);
+		}
+	};
+}
+
+// メンバ関数ポインタ → invoker 変換のエントリーポイント
+template <typename TClass, typename TRet, typename... TArgs>
+auto MakeInvoker(TRet (TClass::*fn)(TArgs...))
+{
+	return MakeInvokerImpl(fn, std::index_sequence_for<TArgs...>{});
+}
+// const メンバ関数オーバーロード
+template <typename TClass, typename TRet, typename... TArgs>
+auto MakeInvoker(TRet (TClass::*fn)(TArgs...) const)
+{
+	return MakeInvokerImpl(fn, std::index_sequence_for<TArgs...>{});
+}
+
+// -------------------------- マクロ定義 ---------------------
 
 // ---- マクロ ----
 #if 0
@@ -162,6 +275,36 @@ private:
 
 #define REGISTER_PROPERTY(ClassName, propName, propType) \
 			meta.properties.push_back({ #propType, #propName, GetOffset(&ClassName::propName), {} });
+
+#define REGISTER_METHOD(ClassName, MethodName, ReturnType, ...)                                                           \
+	{                                                                                                                     \
+		MethodInfo m;                                                                                                     \
+		m.name = #MethodName;                                                                                             \
+		m.returnType = #ReturnType;                                                                                       \
+		std::string _rm_argsStr = #__VA_ARGS__;                                                                           \
+		std::istringstream _rm_ss(_rm_argsStr);                                                                           \
+		std::string _rm_arg;                                                                                              \
+		while (std::getline(_rm_ss, _rm_arg, ','))                                                                        \
+		{                                                                                                                 \
+			auto _rm_b = _rm_arg.find_first_not_of(" \t");                                                                \
+			auto _rm_e = _rm_arg.find_last_not_of(" \t");                                                                 \
+			if (_rm_b != std::string::npos)                                                                               \
+			{                                                                                                             \
+				std::string _rm_trimmed = _rm_arg.substr(_rm_b, _rm_e - _rm_b + 1);                                       \
+				size_t _rm_spacePos = _rm_trimmed.rfind(' ');                                                             \
+				if (_rm_spacePos != std::string::npos)                                                                    \
+				{                                                                                                         \
+					m.parameters.emplace_back(_rm_trimmed.substr(0, _rm_spacePos), _rm_trimmed.substr(_rm_spacePos + 1)); \
+				}                                                                                                         \
+				else                                                                                                      \
+				{                                                                                                         \
+					m.parameters.emplace_back(_rm_trimmed, "");                                                           \
+				}                                                                                                         \
+			}                                                                                                             \
+		}                                                                                                                 \
+		m.invoker = MakeInvoker(&ClassName::MethodName);                                                                  \
+		meta.methods.push_back(m);                                                                                        \
+	}
 
 #define ATTR(name, ...) AttributeInfo{ #name, { __VA_ARGS__ } }
 

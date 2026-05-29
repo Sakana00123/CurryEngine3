@@ -11,6 +11,11 @@ class ObjectId
 public:
 	// デフォルトコンストラクタは無効なIDを生成する。内部のID値は0で、これは有効なIDとはみなされない。
 	ObjectId() : m_value(0) {}
+	ObjectId(const ObjectId& other) = default;
+	ObjectId& operator=(const ObjectId& other) = default;
+	ObjectId(ObjectId&& other) noexcept = default;
+	ObjectId& operator=(ObjectId&& other) noexcept = default;
+
 
 	/// <summary>
 	/// 新しいIDを生成する。旧int範囲を避け、UUID範囲から生成する。

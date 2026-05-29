@@ -330,12 +330,14 @@ public:
 public:
 
     /** @brief 有効か（アクティブ）を返します。*/
+	C_FUNCTION()
     bool IsActive() const;
 
     /**
      * @brief 有効/無効を設定します。
      * @param set `true` で有効、`false` で無効。
      */
+	C_FUNCTION()
     void SetActive(bool set);
 
 	/** @brief 自身が有効かを返します。*/

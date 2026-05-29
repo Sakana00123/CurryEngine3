@@ -105,6 +105,31 @@ void Generater::GenerateHeader(const ClassInfo& info, const std::string& outPath
 			ofs << ")\n";
 		}
 	}
+	for (const auto& method : info.methods)
+	{
+		ofs << "    REGISTER_METHOD(" 
+			<< info.name << ", "
+			<< method.name << ", "
+			<< method.returnType;
+		
+		if (!method.parameters.empty())
+		{
+			ofs << ", ";
+			for (size_t i = 0; i < method.parameters.size(); i++)
+			{
+				const auto& param = method.parameters[i];
+				ofs << param.first << " " << param.second;
+				if (i < method.parameters.size() - 1)
+					ofs << ", ";
+			}
+		}
+		else
+		{
+			ofs << ", void"; // ˆø”‚È‚µ‚Í void ‚Æ‚µ‚Äˆµ‚¤
+		}
+		
+		ofs << ")\n";
+	}
 	ofs << "END_REGISTER(" << info.name << ")\n";
 	ofs.close();
 }
