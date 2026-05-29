@@ -137,6 +137,7 @@ void Button::DrawProperty() {
         if (ImGui::BeginChild("OnClickEvent", ImVec2(250, 150), true)) {
 
             for (size_t i = 0; i < eventInfo.size(); i++) {
+				auto& info = eventInfo[i];
                 ImGui::PushID(static_cast<int>(i));
                 // 要素の間に区切り線をつける
                 if (i > 0) {
@@ -146,15 +147,15 @@ void Button::DrawProperty() {
 				std::string label;
 				Object* target = nullptr;
 				GameObject* targetObj = nullptr;
-				if (eventInfo[i].objReference.IsValid())
+				if (info.objReference.IsValid())
 				{
-					if (eventInfo[i].className == "GameObject")
+					if (info.className == "GameObject")
                     {
-						target = targetObj = ObjectManager::Find(eventInfo[i].objReference);
+						target = targetObj = ObjectManager::Find(info.objReference);
                     }
 					else
                     {
-						if (auto comp = GetScene()->FindComponentById<Component>(eventInfo[i].objReference))
+						if (auto comp = GetScene()->FindComponentById<Component>(info.objReference))
 						{
 							targetObj = comp->GetOwner();
 							target = comp;
@@ -175,10 +176,10 @@ void Button::DrawProperty() {
                     if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject")) {
 						if (payload->DataSize == sizeof(ObjectId)) // ペイロードのサイズが ObjectId と同じであることを確認
 						{
-							eventInfo[i].objReference = *reinterpret_cast<const ObjectId*>(payload->Data); // ペイロードから ObjectId を取得
-							eventInfo[i].className = "GameObject"; // クラス名を GameObject に設定
-							eventInfo[i].funcName.clear();	// クラスが変わったので関数名をリセット
-							eventInfo[i].value.second.reset(); // 引数もリセット
+							info.objReference = *reinterpret_cast<const ObjectId*>(payload->Data); // ペイロードから ObjectId を取得
+							info.className = "GameObject"; // クラス名を GameObject に設定
+							info.funcName.clear();	// クラスが変わったので関数名をリセット
+							info.value.second.reset(); // 引数もリセット
 						}
                     }
                     ImGui::EndDragDropTarget();
@@ -217,15 +218,15 @@ void Button::DrawProperty() {
 				}
 
 				// 関数のコンボボックス
-				if (ImGui::BeginCombo("##func", eventInfo[i].funcName.empty() ? "No Function" : eventInfo[i].funcName.c_str()))
+				if (ImGui::BeginCombo("##func", info.funcName.empty() ? "No Function" : info.funcName.c_str()))
 				{
-					if (ImGui::Selectable("No Function", eventInfo[i].funcName.empty()))
+					if (ImGui::Selectable("No Function", info.funcName.empty()))
 					{
-						eventInfo[i].funcName.clear();
-						eventInfo[i].value.first.clear();
-						eventInfo[i].value.second.reset();
+						info.funcName.clear();
+						info.value.first.clear();
+						info.value.second.reset();
 
-						UpdateInfo(eventInfo[i]);
+						UpdateInfo(info);
 
 						ImGui::SetItemDefaultFocus();
 					}
@@ -245,15 +246,16 @@ void Button::DrawProperty() {
 
 								for (int k = 0; k < itemStrs.size(); k++)
 								{
-									//bool isSelected = (eventInfo[i].className == classes[i]->GetTypeName()) && (itemStrs.size() > 0) && (eventInfo[i].funcName == itemStrs[j]);
-									bool isSelected = false;
+									auto& funcName = itemStrs[k];
+									bool isSelected = (info.className == pClass->GetTypeName()) && (info.funcName == funcName);
+									//bool isSelected = false;
 									bool enabled = true;
-									if (ImGui::MenuItem(itemStrs[k].c_str(), NULL, isSelected, enabled))
+									if (ImGui::MenuItem(funcName.c_str(), NULL, isSelected, enabled))
 									{
-										eventInfo[i].objReference = pClass->GetId();
-										eventInfo[i].className = pClass->GetTypeName();
-										eventInfo[i].funcName = itemStrs[k];
-										UpdateInfo(eventInfo[i]);
+										info.objReference = pClass->GetId();
+										info.className = pClass->GetTypeName();
+										info.funcName = funcName;
+										UpdateInfo(info);
 									}
 
 									if (isSelected) {
@@ -267,10 +269,10 @@ void Button::DrawProperty() {
                     ImGui::EndCombo();
                 }
 				// 引数の表示 (std::anyから型情報を元に適切なUIを表示する)
-				if (eventInfo[i].IsValid())
+				if (info.IsValid())
 				{
 					{
-						auto& [typeStr, valueAny] = eventInfo[i].value;
+						auto& [typeStr, valueAny] = info.value;
 						if (typeStr == "int")
 						{
 							int val = valueAny.has_value() ? std::any_cast<int>(valueAny) : 0;
