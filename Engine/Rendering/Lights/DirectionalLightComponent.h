@@ -8,7 +8,7 @@ class DirectionalLightComponent : public LightBase
 	C_REFLECT(DirectionalLightComponent)
 public:
 	C_PROPERTY()
-	DirectX::XMFLOAT4 color{ 1, 1, 1, 1 };
+	Color color{ 1, 1, 1, 1 };
 
 public:
 	DirectionalLightComponent() = default;

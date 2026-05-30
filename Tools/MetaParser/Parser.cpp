@@ -433,28 +433,58 @@ std::vector<StructInfo> Parser::ExtractStructs(const std::string& text)
 
 void Parser::ExtractStructFields(const std::string& text, size_t blockStart, size_t blockEnd, StructInfo& info)
 {
-    // struct 内の単純フィールドをパース（C_PROPERTY マクロなしで全フィールドを対象）
-    // "Type Name;" パターンを抽出（アクセス指定子・メソッドは除外）
     std::string body = text.substr(blockStart + 1, blockEnd - blockStart - 1);
 
-    std::regex fieldRegex(
-        R"(^\s*([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+)\s*(?:=\s*[^;]+)?;)"
-    );
-
-    std::sregex_iterator it(body.begin(), body.end(), fieldRegex);
-    for (; it != std::sregex_iterator(); ++it)
+    // 1行ずつ処理
+    std::istringstream stream(body);
+    std::string line;
+    while (std::getline(stream, line))
     {
-        std::string type = (*it)[1].str();
-        std::string name = (*it)[2].str();
+        Trim(line);
+        if (line.empty()) continue;
+
+        // メソッド・演算子・コンストラクタ・デストラクタを除外
+        if (line.find('(') != std::string::npos) continue;
+        if (line.find('~') != std::string::npos) continue;
+        if (line.find("operator") != std::string::npos) continue;
+
+        // セミコロンで終わる行のみ対象
+        if (line.back() != ';') continue;
+        line.pop_back(); // セミコロン除去
+        Trim(line);
+
+        // ポインタ・参照修飾子を除去（型名の正規化）
+        // "float* x" → "float x" / "const Vector3& v" → "Vector3 v"
+        // const も除去
+        std::string normalized = line;
+        // const を除去
+        std::regex constRegex(R"(\bconst\b)");
+        normalized = std::regex_replace(normalized, constRegex, "");
+        // * & を除去
+        for (char& c : normalized)
+            if (c == '*' || c == '&') c = ' ';
+        Trim(normalized);
+        // 連続スペースを1つに
+        normalized = std::regex_replace(normalized, std::regex(R"(\s+)"), " ");
+
+        // "Type Name" または "Type Name = defaultValue" をパース
+        // デフォルト値部分は無視
+        std::regex fieldRegex(R"(^([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+)(?:\s*=.*)?$)");
+        std::smatch m;
+        if (!std::regex_match(normalized, m, fieldRegex)) continue;
+
+        std::string type = m[1].str();
+        std::string name = m[2].str();
 
         // アクセス指定子・キーワードを除外
         static const std::vector<std::string> keywords = {
             "public", "private", "protected", "static", "virtual",
-            "inline", "explicit", "friend", "typedef", "using", "return"
+            "inline", "explicit", "friend", "typedef", "using",
+            "return", "void"
         };
         bool skip = false;
         for (const auto& kw : keywords)
-            if (type == kw) { skip = true; break; }
+            if (type == kw || name == kw) { skip = true; break; }
         if (skip) continue;
 
         FieldInfo f;

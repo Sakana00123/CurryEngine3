@@ -16,6 +16,7 @@
 #include <memory>
 #include <string>
 #include <cstdint>
+#include <unordered_map>
 #include <DirectXMath.h>
 #include "Engine/Core/Math/Vector2.h"
 

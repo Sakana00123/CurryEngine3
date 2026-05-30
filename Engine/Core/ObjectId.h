@@ -1,4 +1,6 @@
 #pragma once
+#include <cstdint>
+#include <string>
 
 namespace IdRange {
 	constexpr uint64_t LEGACY_MAX = 0x00000000FFFFFFFF; // 旧int範囲
@@ -11,6 +13,7 @@ class ObjectId
 public:
 	// デフォルトコンストラクタは無効なIDを生成する。内部のID値は0で、これは有効なIDとはみなされない。
 	ObjectId() : m_value(0) {}
+	explicit ObjectId(uint64_t v) : m_value(v) {}
 	ObjectId(const ObjectId& other) = default;
 	ObjectId& operator=(const ObjectId& other) = default;
 	ObjectId(ObjectId&& other) noexcept = default;
@@ -66,7 +69,6 @@ public:
 	static ObjectId FromValue(uint64_t value);
 
 private:
-	explicit ObjectId(uint64_t v) : m_value(v) {}
 	uint64_t m_value = 0;
 };
 

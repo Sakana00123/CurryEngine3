@@ -112,22 +112,22 @@ static GameObject* InstantiateInternal(GameObject* prefabObject, Transform* pare
 	return nullptr;
 }
 
-GameObject* Component::Instantiate(const std::string& prefabPath, Transform* parent, const Vector3& position, const DirectX::XMFLOAT4& rotation)
+GameObject* Component::Instantiate(const std::string& prefabPath, Transform* parent, const Vector3& position, const Quaternion& rotation)
 {
 	return InstantiateInternal(prefabPath, parent, position, rotation);
 }
 
-GameObject* Component::Instantiate(const std::string& prefabPath, const Vector3& position, const DirectX::XMFLOAT4& rotation)
+GameObject* Component::Instantiate(const std::string& prefabPath, const Vector3& position, const Quaternion& rotation)
 {
 	return InstantiateInternal(prefabPath, nullptr, position, rotation);
 }
 
-GameObject* Component::Instantiate(GameObject* prefab, Transform* parent, const Vector3& position, const DirectX::XMFLOAT4& rotation)
+GameObject* Component::Instantiate(GameObject* prefab, Transform* parent, const Vector3& position, const Quaternion& rotation)
 {
 	return InstantiateInternal(prefab, parent, position, rotation);
 }
 
-GameObject* Component::Instantiate(GameObject* prefab, const Vector3& position, const DirectX::XMFLOAT4& rotation)
+GameObject* Component::Instantiate(GameObject* prefab, const Vector3& position, const Quaternion& rotation)
 {
 	return InstantiateInternal(prefab, nullptr, position, rotation);
 }

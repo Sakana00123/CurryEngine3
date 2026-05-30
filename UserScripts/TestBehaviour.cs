@@ -44,7 +44,7 @@ public class TestBehaviour : Behaviour
         // Rigidbodyが存在する場合はジャンプが押されたら上方向に力を加える
         if (rigidbody != null && Input.GetKeyDown(KeyCode.Space))
         {
-            rigidbody.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
+            //rigidbody.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
             Debug.Log("Jump!");
         }
 

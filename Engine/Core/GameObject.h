@@ -378,9 +378,11 @@ public:
 	ObjectId GetParentId() const { return parentId; }
 
 	/** @brief 所属レイヤーを取得します。*/
+	C_FUNCTION()
 	int GetLayer() const { return layer; }
 
 	/** @brief 所属レイヤーを設定します。*/
+	C_FUNCTION()
     void SetLayer(int layer);
 
     /** @brief 自身の変換。*/
@@ -390,6 +392,7 @@ public:
     GameObject* parent = nullptr;
 
 	/** @brief 親ゲームオブジェクトの ID。GameObject*のparentは今後廃止予定。*/
+	C_PROPERTY(CurryEngine::PropertyAttributes::ReadOnly, CurryEngine::PropertyAttributes::NonSerialized)
 	ObjectId parentId = ObjectId::Invalid();
 
     

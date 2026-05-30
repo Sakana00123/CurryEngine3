@@ -38,20 +38,26 @@ public:
 	int GetValue() const { return value; }
 
 	/** @brief 価値を倍算 **/
+	C_FUNCTION()
 	void MultiplicationValue(int amount) { value *= amount; }
 
 	/* @brief 価値を加算 **/
+	C_FUNCTION()
 	void IncreaseValue(int amount);
 
 	/** @brief 価値をリセット **/
+	C_FUNCTION()
 	void ResetValue() { value = 1; }
 
+	/** @brief 価値を設定 **/
 	void SetValue(int newValue) { value = newValue; }
 
 	/** @brief 初期位置に戻す **/
+	C_FUNCTION()
 	void ResetToInitialPosition();
 
 	/** @brief ボールのスケールを変更（初期スケールに基づいて） **/
+	C_FUNCTION()
 	void ScaleBall(float scaleFactor);
 
 	/** @brief ボールのスケールを変更（現在のスケールに基づいて） **/

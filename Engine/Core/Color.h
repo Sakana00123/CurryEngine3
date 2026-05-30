@@ -1,7 +1,10 @@
 #pragma once
 #include <DirectXMath.h>
 using namespace DirectX;
+#include "Engine/Core/Reflection/Meta.h"
+
 //カラー（XMFLOAT4と互換性あり）
+C_STRUCT()
 struct Color
 {
 	float r;

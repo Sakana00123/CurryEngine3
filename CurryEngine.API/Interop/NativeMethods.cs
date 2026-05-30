@@ -151,8 +151,8 @@ internal static partial class NativeMethods
     [LibraryImport(Dll)] internal static partial void Rigidbody_SetVelocity(ulong ownerId, Vector3 velocity);
     [LibraryImport(Dll)] internal static partial Vector3 Rigidbody_GetAngularVelocity(ulong ownerId);
     [LibraryImport(Dll)] internal static partial void Rigidbody_SetAngularVelocity(ulong ownerId, Vector3 angularVelocity);
-    [LibraryImport(Dll)] internal static partial void Rigidbody_SetMass(ulong ownerId, float mass);
-    [LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong ownerId);
+    //[LibraryImport(Dll)] internal static partial void Rigidbody_SetMass(ulong ownerId, float mass);
+    //[LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong ownerId);
     //[LibraryImport(Dll)] internal static partial void Rigidbody_SetDrag(ulong ownerId, float drag);
     //[LibraryImport(Dll)] internal static partial float Rigidbody_GetDrag(ulong ownerId);
     //[LibraryImport(Dll)] internal static partial void Rigidbody_SetAngularDrag(ulong ownerId, float angularDrag);
@@ -160,23 +160,23 @@ internal static partial class NativeMethods
     [LibraryImport(Dll)] internal static partial void Rigidbody_SetKinematicTarget(ulong ownerId, Vector3 position, Quaternion rotation);
 
 
-    [LibraryImport(Dll)]
-    internal static partial void Rigidbody_SetUseGravity(ulong ownerId,[MarshalAs(UnmanagedType.Bool)] bool useGravity);
-    [LibraryImport(Dll)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    internal static partial bool Rigidbody_GetUseGravity(ulong ownerId);
+    //[LibraryImport(Dll)]
+    //internal static partial void Rigidbody_SetUseGravity(ulong ownerId,[MarshalAs(UnmanagedType.Bool)] bool useGravity);
+    //[LibraryImport(Dll)]
+    //[return: MarshalAs(UnmanagedType.Bool)]
+    //internal static partial bool Rigidbody_GetUseGravity(ulong ownerId);
 
-    [LibraryImport(Dll)]
-    internal static partial void Rigidbody_SetIsKinematic(ulong ownerId, [MarshalAs(UnmanagedType.Bool)] bool isKinematic);
-    [LibraryImport(Dll)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    internal static partial bool Rigidbody_GetIsKinematic(ulong ownerId);
+    //[LibraryImport(Dll)]
+    //internal static partial void Rigidbody_SetIsKinematic(ulong ownerId, [MarshalAs(UnmanagedType.Bool)] bool isKinematic);
+    //[LibraryImport(Dll)]
+    //[return: MarshalAs(UnmanagedType.Bool)]
+    //internal static partial bool Rigidbody_GetIsKinematic(ulong ownerId);
 
-    // ------------------------------------- Collider -----------------------------------------
-    [LibraryImport(Dll)] internal static partial void Collider_SetIsTrigger(ulong ownerId, ulong componentId, [MarshalAs(UnmanagedType.Bool)] bool isTrigger);
-    [LibraryImport(Dll)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    internal static partial bool Collider_GetIsTrigger(ulong ownerId, ulong componentId);
+    //// ------------------------------------- Collider -----------------------------------------
+    //[LibraryImport(Dll)] internal static partial void Collider_SetIsTrigger(ulong ownerId, ulong componentId, [MarshalAs(UnmanagedType.Bool)] bool isTrigger);
+    //[LibraryImport(Dll)]
+    //[return: MarshalAs(UnmanagedType.Bool)]
+    //internal static partial bool Collider_GetIsTrigger(ulong ownerId, ulong componentId);
 
 
 

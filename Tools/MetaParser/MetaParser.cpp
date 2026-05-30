@@ -43,16 +43,63 @@ int main(int argc, char** argv)
 
 	// C# コード生成器を作成してコード生成
 	std::filesystem::path typeMapPath = std::filesystem::current_path() / "type_map.json";
-	std::string typeMapPathStr = std::filesystem::exists(typeMapPath) ? typeMapPath.string() : "";
-	if (typeMapPathStr.empty())
+
+	// C# 出力ディレクトリは outputJson/CSharp とする
+	std::filesystem::path csOutputDir(outputJson);
+	csOutputDir /= "CSharp";
+	if (!std::filesystem::exists(csOutputDir))
 	{
-		std::cout << "Warning: type_map.json not found in current directory. C# generation will use empty type map.\n";
+		std::filesystem::create_directories(csOutputDir);
 	}
-	else
+
+	std::vector<FileInfo> csFiles;
+
+	std::vector<std::string> ignoreClasses = {
+		"Vector2", "Vector3", "Vector4", "Quaternion", "Matrix4x4",
+		"Color", "Transform", "GameObject", "Component", "Object", "Camera",
+	};
+	// 基底クラスを Componentに変更するクラスのリスト(Component を継承しているクラスで、Component として扱いたいクラスを指定)
+	std::vector<std::string> changeBasesToComponent = {
+		"RectTransform"
+	};
+
+	for (auto& file : allFiles)
 	{
-		CSharpGenerater csGenerater(outputJson, typeMapPathStr);
-		csGenerater.Generate(allFiles);
+		// C# 生成対象を絞る
+		bool allowGenerate = false;
+		for (auto& c : file.classes)
+		{
+			// ignoreClasses に含まれるクラスは生成対象外
+			if (std::find(ignoreClasses.begin(), ignoreClasses.end(), c.name) != ignoreClasses.end())
+			{
+				std::cout << "Skipping C# generation for class: " << c.name << "\n";
+				continue;
+			}
+			// changeBasesToComponent に含まれるクラスは基底クラスを Component に変更して生成
+			if (std::find(changeBasesToComponent.begin(), changeBasesToComponent.end(), c.name) != changeBasesToComponent.end())
+			{
+				std::cout << "Changing base class to Component for: " << c.name << "\n";
+				c.bases.clear();
+				c.bases.push_back("Component");
+				allowGenerate = true;
+				break;
+			}
+
+			if (c.reflect)
+			{
+				allowGenerate = true;
+				break;
+			}
+		}
+		if (allowGenerate)
+		{
+			csFiles.push_back(file);
+		}
 	}
+
+
+	CSharpGenerater csGenerater(csOutputDir.string(), typeMapPath.string());
+	csGenerater.Generate(csFiles);
 
 	return 0;
 }

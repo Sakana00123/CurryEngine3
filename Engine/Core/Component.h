@@ -9,6 +9,7 @@
 #include "Engine/EditorSupport/AutoRegisterComponent.h"
 #include "Engine/Rendering/Pipeline/RenderContext.h"
 #include "Engine/Core/Math/Vector3.h"
+#include "Engine/Core/Math/Quaternion.h"
 #include "Engine/Core/Object.h"
 #include "Engine/EditorSupport/ImGuiHelpers.h"
 
@@ -86,11 +87,11 @@ public:
 	static void Destroy(GameObject* obj);
 
 	// Prefab のインスタンス化(ファイルパス版)
-	static GameObject* Instantiate(const std::string& prefabPath, Transform* parent = nullptr, const Vector3& position = Vector3::Zero, const DirectX::XMFLOAT4& rotation = {0,0,0,1});
-	static GameObject* Instantiate(const std::string& prefabPath, const Vector3& position = Vector3::Zero, const DirectX::XMFLOAT4& rotation = { 0,0,0,1 });
+	static GameObject* Instantiate(const std::string& prefabPath, Transform* parent = nullptr, const Vector3& position = Vector3::Zero, const Quaternion& rotation = Quaternion::Identity);
+	static GameObject* Instantiate(const std::string& prefabPath, const Vector3& position = Vector3::Zero, const Quaternion& rotation = Quaternion::Identity);
 	// Prefab のインスタンス化(オブジェクト版)
-	static GameObject* Instantiate(GameObject* prefab, Transform* parent = nullptr, const Vector3& position = Vector3::Zero, const DirectX::XMFLOAT4& rotation = { 0,0,0,1 });
-	static GameObject* Instantiate(GameObject* prefab, const Vector3& position = Vector3::Zero, const DirectX::XMFLOAT4& rotation = { 0,0,0,1 });
+	static GameObject* Instantiate(GameObject* prefab, Transform* parent = nullptr, const Vector3& position = Vector3::Zero, const Quaternion& rotation = Quaternion::Identity);
+	static GameObject* Instantiate(GameObject* prefab, const Vector3& position = Vector3::Zero, const Quaternion& rotation = Quaternion::Identity);
 
 protected:
 	friend class GameObject;

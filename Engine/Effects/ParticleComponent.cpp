@@ -48,8 +48,8 @@ void ParticleComponent::Play()
 			{
 				LineData::Segment& segment = settings.lineData.segments[i % settings.lineData.segments.size()];
 
-				XMFLOAT3 startPos = segment.start ? segment.start->GetWorldPosition() : XMFLOAT3();
-				XMFLOAT3 endPos = segment.end ? segment.end->GetWorldPosition() : XMFLOAT3();
+				Vector3 startPos = segment.start ? segment.start->GetWorldPosition() : Vector3();
+				Vector3 endPos = segment.end ? segment.end->GetWorldPosition() : Vector3();
 				int segmentCount = segment.segmentCount > 0 ? segment.segmentCount : 1;
 
 				if (segment.start && segment.end)

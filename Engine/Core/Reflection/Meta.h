@@ -12,10 +12,10 @@
 	friend struct ClassName##_AutoRegister;
 
 // C_CLASS マクロをクラス宣言の前に付けると、そのクラスがリフレクションシステムに登録されます。引数で基底クラスも指定可能。
-#define C_CLASS(ClassName, ...) \
+#define C_CLASS(...) \
 
 // C_STRUCT マクロを struct 宣言の前に付けると、その構造体がリフレクションシステムに登録されます。引数で属性も指定可能。
-#define C_STRUCT(StructName, ...) \
+#define C_STRUCT(...) \
 
 
 /**

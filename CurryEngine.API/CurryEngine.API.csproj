@@ -9,6 +9,10 @@
 	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+	<ItemGroup>
+		<Compile Include="$(SolutionDir)Generated\CSharp\**\*.g.cs" />
+	</ItemGroup>
+	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 		<Copy SourceFiles="$(OutDir)CurryEngine.API.dll" DestinationFolder="$(MSBuildProjectDirectory)\..\x64\$(Configuration)\" />
 	</Target>

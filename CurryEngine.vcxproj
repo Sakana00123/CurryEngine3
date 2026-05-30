@@ -31,6 +31,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(SolutionDir)\CurryEngine.GeneratedFiles.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -80,7 +81,9 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"$(ProjectDir)Tools\MetaParser\x64\Debug\MetaParser.exe" "$(ProjectDir)Generated" "$(ProjectDir)Engine" "$(ProjectDir)Game"</Command>
+      <Command>pushed "$(SolutionDir)"
+"parse.bat"
+popd</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,7 +120,9 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>"$(ProjectDir)Tools\MetaParser\x64\Debug\MetaParser.exe" "$(ProjectDir)Generated" "$(ProjectDir)Engine" "$(ProjectDir)Game"</Command>
+      <Command>pushed "$(SolutionDir)"
+"parse.bat"
+popd</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -184,6 +189,7 @@
     </ClCompile>
     <ClCompile Include="Engine\Automation\SolutionGenerator.cpp" />
     <ClCompile Include="Engine\BuildSettings.cpp" />
+    <ClCompile Include="Engine\Core\Math\Quaternion.cpp" />
     <ClCompile Include="Engine\EditorSupport\ImGuiHelpers.cpp" />
     <ClCompile Include="Engine\Editor\BuildSettingsWindow.cpp" />
     <ClCompile Include="Engine\Events\PointerEventData.cpp" />
@@ -398,15 +404,11 @@
     <ClCompile Include="Engine\Resources\AnimationClip.cpp" />
     <ClCompile Include="Engine\Scenes\SceneMigrator.cpp" />
     <ClCompile Include="Engine\Scripting\Exports\CameraExports.cpp" />
-    <ClCompile Include="Engine\Scripting\Exports\ColliderExports.cpp" />
     <ClCompile Include="Engine\Scripting\Exports\ComponentExports.cpp" />
-    <ClCompile Include="Engine\Scripting\Exports\GameObjectExports.cpp" />
     <ClCompile Include="Engine\Scripting\Exports\InputExports.cpp" />
     <ClCompile Include="Engine\Scripting\Exports\LoggerExports.cpp" />
-    <ClCompile Include="Engine\Scripting\Exports\RigidbodyExports.cpp" />
     <ClCompile Include="Engine\Scripting\Exports\ScriptExports.cpp" />
     <ClCompile Include="Engine\Scripting\Exports\TimeExports.cpp" />
-    <ClCompile Include="Engine\Scripting\Exports\TransformExports.cpp" />
     <ClCompile Include="Engine\Scripting\ScriptHost.cpp" />
     <ClCompile Include="Engine\Scripting\ScriptSystem.cpp" />
     <ClCompile Include="Engine\Scripting\ScriptWatcher.cpp" />
@@ -693,6 +695,7 @@
     <ClInclude Include="Engine\Audio\ThirdPerty\_kiss_fft_guts.h" />
     <ClInclude Include="Engine\Automation\SolutionGenerator.h" />
     <ClInclude Include="Engine\BuildSettings.h" />
+    <ClInclude Include="Engine\Core\Math\Quaternion.h" />
     <ClInclude Include="Engine\Editor\BuildSettingsWindow.h" />
     <ClInclude Include="Engine\Physics\FixedJoint.h" />
     <ClInclude Include="Engine\Physics\HingeJoint.h" />

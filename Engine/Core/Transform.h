@@ -5,9 +5,9 @@
 
 #include "Engine/Core/Math/Vector2.h"
 #include "Engine/Core/Math/Vector3.h"
+#include "Engine/Core/Math/Quaternion.h"
 
 using namespace DirectX;
-using Quaternion = XMFLOAT4;
 
 /**
  * @file
@@ -20,6 +20,7 @@ using Quaternion = XMFLOAT4;
 /**
  * @brief 座標系（左右手系、Up 軸）を表す列挙体。
  */
+C_ENUM()
 enum class CoordinateSystem
 {
 	LeftHand_YUp,//左手座標系、Y軸上
