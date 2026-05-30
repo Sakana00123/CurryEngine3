@@ -661,18 +661,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Tools\MetaParser\Generater.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Tools\MetaParser\MetaParser.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Tools\MetaParser\Parser.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archive\geometric_primitive.h" />
@@ -976,8 +964,6 @@
     <ClInclude Include="External\imgui-docking\profiler.h" />
     <ClInclude Include="External\imgui-docking\timer.h" />
     <ClInclude Include="Game\CharacterMovement.h" />
-    <ClInclude Include="Tools\MetaParser\Generater.h" />
-    <ClInclude Include="Tools\MetaParser\Parser.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BackgroundShaderPS.hlsl">

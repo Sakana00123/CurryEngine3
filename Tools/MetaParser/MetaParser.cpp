@@ -1,6 +1,7 @@
 ﻿// MetaParser.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
 //
 
+#include "CSharpGenerater.h"
 #include "Parser.h"
 #include "Generater.h"
 #include <filesystem>
@@ -39,6 +40,19 @@ int main(int argc, char** argv)
 	// コード生成器を作成してコード生成
 	Generater generater(outputJson);
 	generater.Generate(allFiles);
+
+	// C# コード生成器を作成してコード生成
+	std::filesystem::path typeMapPath = std::filesystem::current_path() / "type_map.json";
+	std::string typeMapPathStr = std::filesystem::exists(typeMapPath) ? typeMapPath.string() : "";
+	if (typeMapPathStr.empty())
+	{
+		std::cout << "Warning: type_map.json not found in current directory. C# generation will use empty type map.\n";
+	}
+	else
+	{
+		CSharpGenerater csGenerater(outputJson, typeMapPathStr);
+		csGenerater.Generate(allFiles);
+	}
 
 	return 0;
 }

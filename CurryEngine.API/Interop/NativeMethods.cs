@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace CurryEngine.Interop;
 internal static partial class NativeMethods
 {
-    const string Dll = "CurryEngine.exe";
+    internal const string Dll = "CurryEngine.exe";
 
     // ------------------------------------ Console -----------------------------------------
     [LibraryImport(Dll)] internal static partial void Console_CustomLog(int logLevel, [MarshalAs(UnmanagedType.LPUTF8Str)] string message,

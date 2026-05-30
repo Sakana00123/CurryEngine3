@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-struct FileInfo;
-struct ClassInfo;
+#include "ParseInfo.h"
 
 class Generater
 {

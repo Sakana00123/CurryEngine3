@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "Physics.h"
 
+C_ENUM()
 enum class ForceMode
 {
 	Force,          // 継続的な力（質量に影響される）
@@ -13,6 +14,7 @@ enum class ForceMode
 };
 C_REGISTER_TYPE(ForceMode)
 
+C_ENUM()
 enum class RigidbodyInterpolation
 {
 	None,       // 補間なし
@@ -21,6 +23,7 @@ enum class RigidbodyInterpolation
 };
 C_REGISTER_TYPE(RigidbodyInterpolation)
 
+C_ENUM()
 enum class RigidbodyCollisionDetectionMode
 {
 	Discrete,   // 離散的な衝突検出（高速だが高速移動オブジェクトのすり抜けが発生する可能性あり）
@@ -30,6 +33,7 @@ enum class RigidbodyCollisionDetectionMode
 };
 C_REGISTER_TYPE(RigidbodyCollisionDetectionMode)
 
+C_ENUM()
 enum class RigidbodySleepMode
 {
 	NeverSleep, // 常にアクティブ
@@ -39,18 +43,19 @@ enum class RigidbodySleepMode
 };
 C_REGISTER_TYPE(RigidbodySleepMode)
 
+C_ENUM()
 enum class RigidbodyConstraints
 {
 	None = 0,
-	FreezePositionX = 1 << 0,
-	FreezePositionY = 1 << 1,
-	FreezePositionZ = 1 << 2,
-	FreezeRotationX = 1 << 3,
-	FreezeRotationY = 1 << 4,
-	FreezeRotationZ = 1 << 5,
-	FreezePosition = FreezePositionX | FreezePositionY | FreezePositionZ,
-	FreezeRotation = FreezeRotationX | FreezeRotationY | FreezeRotationZ,
-	FreezeAll = FreezePositionX | FreezePositionY | FreezePositionZ | FreezeRotationX | FreezeRotationY | FreezeRotationZ
+	FreezePositionX = 1,	// 1 << 0
+	FreezePositionY = 2,	// 1 << 1
+	FreezePositionZ = 4,	// 1 << 2
+	FreezeRotationX = 8,	// 1 << 3
+	FreezeRotationY = 16,	// 1 << 4
+	FreezeRotationZ = 32,	// 1 << 5
+	FreezePosition = 7,		// FreezePositionX | FreezePositionY | FreezePositionZ
+	FreezeRotation = 56,	// FreezeRotationX | FreezeRotationY | FreezeRotationZ
+	FreezeAll = 63			// FreezePositionX | FreezePositionY | FreezePositionZ | FreezeRotationX | FreezeRotationY | FreezeRotationZ
 };
 C_REGISTER_TYPE(RigidbodyConstraints)
 

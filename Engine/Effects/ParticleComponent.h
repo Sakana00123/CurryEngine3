@@ -45,12 +45,15 @@ public:
 	void Load(const std::string& filePath);
 
 	// エフェクト再生
+	C_FUNCTION()
 	void Play();
 
 	// エフェクト停止
+	C_FUNCTION()
 	void Stop();
 
 	// 再生中かを返す
+	C_FUNCTION()
 	bool IsPlaying() const;
 
 	// エフェクトハンドル取得

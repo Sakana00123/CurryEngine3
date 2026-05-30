@@ -11,6 +11,12 @@
 #define C_REFLECT(ClassName) \
 	friend struct ClassName##_AutoRegister;
 
+// C_CLASS マクロをクラス宣言の前に付けると、そのクラスがリフレクションシステムに登録されます。引数で基底クラスも指定可能。
+#define C_CLASS(ClassName, ...) \
+
+// C_STRUCT マクロを struct 宣言の前に付けると、その構造体がリフレクションシステムに登録されます。引数で属性も指定可能。
+#define C_STRUCT(StructName, ...) \
+
 
 /**
  * @brief C_PROPERTY マクロをプロパティ宣言の前に付けると、そのプロパティがリフレクションシステムに登録されます。
@@ -24,6 +30,10 @@ public:
 
  // C_FUNCTION マクロをメソッド宣言の前に付けると、そのメソッドがリフレクションシステムに登録されます。引数で属性も指定可能。
 #define C_FUNCTION(...) \
+
+// C_ENUM マクロを enum / enum class 宣言の前に付けると、その列挙型がリフレクションシステムに登録されます。引数で属性も指定可能。
+#define C_ENUM(...) \
+
 
 
 // ----------------- C_PROPERTYマクロ内に書ける属性 -----------------

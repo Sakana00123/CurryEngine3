@@ -78,12 +78,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CSharpGenerater.cpp" />
     <ClCompile Include="Generater.cpp" />
     <ClCompile Include="MetaParser.cpp" />
     <ClCompile Include="Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CSharpGenerater.h" />
     <ClInclude Include="Generater.h" />
+    <ClInclude Include="ParseInfo.h" />
     <ClInclude Include="Parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
