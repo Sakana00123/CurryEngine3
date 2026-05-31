@@ -51,9 +51,9 @@ constexpr float ImGuiPropertyNameWidth = 120.0f; // プロパティ名の幅を固定するた
 				"Set " + std::string(name) + " old:" + oldValueStr + " new:" + newValueStr, \
 				[this](const std::pair<std::string, type>& pair) { \
 					if (Object* object = dynamic_cast<Object*>(this)) { \
-						char* propertyAddress = object->GetPropertyAddress(pair.first); /*プロパティのアドレスを取得*/ \
-						if (propertyAddress) { \
-							*reinterpret_cast<type*>(propertyAddress) = pair.second; /*プロパティの値を変更*/ \
+						auto* prop = object->GetClassMeta()->FindProperty(pair.first); /*プロパティのメタ情報を取得*/ \
+						if (prop) { \
+							prop->setter(this, pair.second); /*プロパティの値を変更*/ \
 						} \
 						else { \
 							Console::LogError("Property not found: " + pair.first); /*プロパティが見つからない場合はエラーログを出力*/ \

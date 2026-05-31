@@ -112,6 +112,8 @@ bool ScriptHost::Initialize()
 		L"ReloadScripts");
 	load(m_shutdownFunc, engineApiDll, engineRuntimeType,
 		L"EngineShutdown");
+	load(m_callbacks.RegisterAllScriptMeta, engineApiDll, engineRuntimeType,
+		L"RegisterAllScriptMeta");
 
 	// スクリプトブリッジの関数をロード
 	const wchar_t* scriptBridgeType = L"CurryEngine.Interop.ScriptBridge, CurryEngine.Runtime";
@@ -138,6 +140,8 @@ bool ScriptHost::Initialize()
 
 	load(m_callbacks.GetScriptFields, curryEngineApiDll, scriptBridgeType,
 		L"GetScriptFields");
+	//load(m_callbacks.GetScriptField, curryEngineApiDll, scriptBridgeType,
+	//	L"GetScriptField");
 	load(m_callbacks.SetScriptField, curryEngineApiDll, scriptBridgeType,
 		L"SetScriptField");
 

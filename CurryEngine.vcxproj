@@ -706,6 +706,7 @@ popd</Command>
     <ClInclude Include="Engine\Rendering\Pipeline\Pass\PostProcessPass.h" />
     <ClInclude Include="Engine\Rendering\Pipeline\Pass\TransitionPass.h" />
     <ClInclude Include="Engine\Rendering\Renderers\TrailRenderer.h" />
+    <ClInclude Include="Engine\Scripting\ScriptFieldSerializer.h" />
     <ClInclude Include="Engine\UI\CanvasScaler.h" />
     <ClInclude Include="Engine\UI\GridLayoutGroup.h" />
     <ClInclude Include="Engine\UI\HorizontalLayoutGroup.h" />

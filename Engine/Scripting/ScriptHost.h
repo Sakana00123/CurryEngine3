@@ -20,6 +20,7 @@ using ManagedTriggerCallbackFunc = void(__stdcall*)(void* gcHandle, TriggerInfoD
 using ManagedGetFieldsJsonFunc = void* (__stdcall*)(void* gcHandle);
 using ManagedGetFieldFunc = void* (__stdcall*)(void* gcHandle, const char* fieldName);
 using ManagedSetFieldFunc = void(__stdcall*)(void* gcHandle, const char* fieldName, const char* value);
+using ManagedRegisterAllScriptMetaFunc = void(__stdcall*)(RegisterScriptClassFunc callback);
 //using ManagedGetComponentFunc = void* (__stdcall*)(void* gcHandle, const char* typeName);
 using VoidFunc = void(__stdcall*)();
 using ReloadScriptsFunc = void(__stdcall*)(const char* assemblyPath);
@@ -38,9 +39,12 @@ struct ScriptCallbacks
 	ManagedReleaseFunc ReleaseScript = nullptr;
 	ManagedReloadFunc HotSwapScript = nullptr;
 	ManagedGetFieldsJsonFunc GetScriptFields = nullptr;
+	//ManagedGetFieldFunc GetScriptField = nullptr;
 	ManagedSetFieldFunc SetScriptField = nullptr;
+	ManagedRegisterAllScriptMetaFunc RegisterAllScriptMeta = nullptr;
 
 	ReloadScriptsFunc ReloadScripts = nullptr;
+
 
 	// ------------ Physicsイベント用コールバック ------------
 	ManagedCollisionCallbackFunc OnCollisionEnter = nullptr;

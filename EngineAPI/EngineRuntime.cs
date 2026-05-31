@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using CurryEngine.HotReload;
@@ -105,6 +106,87 @@ public static class EngineRuntime
                 Debug.LogError($"内部例外: {ex.InnerException.Message}");
             }
         }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ScriptPropertyDesc
+    {
+        public IntPtr name; // const char* -> UTF-8 文字列へのポインタ
+        public IntPtr typeName; // const char* -> UTF-8 文字列へのポインタ
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ScriptClassDesc
+    {
+        public IntPtr name; // const char* -> UTF-8 文字列へのポインタ
+        public IntPtr baseClass; // const char* -> UTF-8 文字列へのポインタ (基底クラスがない場合は null)
+        public IntPtr properties; // ScriptPropertyDesc* -> プロパティ配列へのポインタ
+        public int propertyCount; // int -> プロパティの数
+    }
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate void RegisterScriptMetaCallback(ref ScriptClassDesc classDesc);
+
+
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvStdcall)])]
+    public static unsafe void RegisterAllScriptMeta(IntPtr callbackPtr)
+    {
+        var callback = Marshal.GetDelegateForFunctionPointer<RegisterScriptMetaCallback>(callbackPtr);
+
+        foreach (var scriptName in ScriptRegistry.RegisteredNames)
+        {
+            Type scriptType = ScriptRegistry.Resolve(scriptName) ?? throw new InvalidOperationException($"Script type not found: {scriptName}");
+
+            var fields = scriptType.GetFields(BindingFlags.Public | BindingFlags.Instance);
+
+            // ネイティブメモリに確保してGCの影響を受けないようにする
+            var propDescs = new ScriptPropertyDesc[fields.Length];
+            var nameHandles = new List<GCHandle>();
+
+            try
+            {
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    // 文字列をネイティブメモリに固定
+                    var namePtr = Marshal.StringToHGlobalAnsi(fields[i].Name);
+                    var typePtr = Marshal.StringToHGlobalAnsi(fields[i].FieldType.Name);
+                    nameHandles.Add(GCHandle.Alloc(namePtr));  // ← ピン留め
+                    propDescs[i] = new ScriptPropertyDesc { name = namePtr, typeName = typePtr };
+                }
+
+                unsafe
+                {
+                    fixed (ScriptPropertyDesc* propDescsPtr = propDescs)
+                    {
+                        var classDesc = new ScriptClassDesc
+                        {
+                            name = Marshal.StringToHGlobalAnsi(scriptName),
+                            baseClass = IntPtr.Zero, // 基底クラスの情報が必要ならここで設定
+                            properties = (IntPtr)propDescsPtr,
+                            propertyCount = fields.Length
+                        };
+                        callback(ref classDesc);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"RegisterAllScriptMeta 例外: {ex.Message}");
+                continue;
+            }
+            finally
+            {
+                // 確保したネイティブメモリを解放
+                foreach (var handle in nameHandles)
+                {
+                    if (handle.IsAllocated)
+                    {
+                        Marshal.FreeHGlobal(handle.AddrOfPinnedObject());
+                        handle.Free();
+                    }
+                }
+            }
+        }
+
     }
 
     [UnmanagedCallersOnly(CallConvs = [typeof(CallConvStdcall)])]

@@ -193,8 +193,8 @@ void Component::DrawProperty()
 				}
 				ImGui::PushID(prop.name.c_str());
 
-				// フィールドのアドレスを計算
-				char* fieldAddress = reinterpret_cast<char*>(this) + prop.offset;
+				// フィールドの値を取得
+				std::any propertyAny = prop.getter(this);
 
 				// ラベルの取得
 				const char* label = prop.name.c_str();
@@ -236,7 +236,7 @@ void Component::DrawProperty()
 				if (prop.type == "int")
 				{
 					static int prevValue; /* 前回の値を保持する静的変数 */
-					int* value = reinterpret_cast<int*>(fieldAddress);
+					int value = std::any_cast<int>(propertyAny);
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 					int min = 0, max = 0;
@@ -258,14 +258,14 @@ void Component::DrawProperty()
 					}
 
 					// GUI のドラッグ操作で値を編集
-					ImGui::DragInt("##int", value, speed, min, max, format, sliderFlags);
+					ImGui::DragInt("##int", &value, speed, min, max, format, sliderFlags);
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
-						int newValue = *value; /* 現在の値を取得 */
+						int newValue = value; /* 現在の値を取得 */
 						if (newValue != prevValue)
 						{
 							IMGUI_PROPERTY_COMMAND_INT(label, newValue, prevValue);
@@ -277,7 +277,7 @@ void Component::DrawProperty()
 				else if (prop.type == "float")
 				{
 					static float prevValue; /* 前回の値を保持する静的変数 */
-					float* value = reinterpret_cast<float*>(fieldAddress);
+					float value = std::any_cast<float>(propertyAny);
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 					float min = 0.0f, max = 0.0f;
@@ -299,14 +299,14 @@ void Component::DrawProperty()
 					}
 
 					// GUI のドラッグ操作で値を編集
-					ImGui::DragFloat("##float", value, speed, min, max, format, sliderFlags);
+					ImGui::DragFloat("##float", &value, speed, min, max, format, sliderFlags);
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
-						float newValue = *value; /* 現在の値を取得 */
+						float newValue = value; /* 現在の値を取得 */
 						if (newValue != prevValue)
 						{
 							IMGUI_PROPERTY_COMMAND_FLOAT(label, newValue, prevValue);
@@ -318,17 +318,17 @@ void Component::DrawProperty()
 				else if (prop.type == "bool")
 				{
 					static bool prevValue; /* 前回の値を保持する静的変数 */
-					bool* value = reinterpret_cast<bool*>(fieldAddress);
+					bool value = std::any_cast<bool>(propertyAny);
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
-					ImGui::Checkbox("##bool", value);
+					ImGui::Checkbox("##bool", &value);
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
-						bool newValue = *value; /* 現在の値を取得 */
+						bool newValue = value; /* 現在の値を取得 */
 						if (newValue != prevValue)
 						{
 							IMGUI_PROPERTY_COMMAND_BOOL(label, newValue, prevValue);
@@ -337,21 +337,21 @@ void Component::DrawProperty()
 					}
 					if (readOnly) ImGui::EndDisabled(); // ReadOnly 属性がある場合は描画の無効化を終了
 				}
-				else if (prop.type == "std::string")
+				else if (prop.type == "std::string" || prop.type == "string")
 				{
-					std::string* value = reinterpret_cast<std::string*>(fieldAddress);
-					std::string oldValue = *value;
+					std::string value = std::any_cast<std::string>(propertyAny);
+					std::string oldValue = value;
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 					char buffer[256];
-					strncpy_s(buffer, value->c_str(), sizeof(buffer));
+					strncpy_s(buffer, value.c_str(), sizeof(buffer));
 					buffer[sizeof(buffer) - 1] = '\0'; // バッファの最後を null で終端
-					static std::string prevValue = *value; /* 前回の値を保持する静的変数 */
+					static std::string prevValue = value; /* 前回の値を保持する静的変数 */
 					bool valueChanged = false; // 値が変更されたかを追跡するフラグ
 					valueChanged |= ImGui::InputText("##string", buffer, sizeof(buffer));
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
@@ -364,10 +364,10 @@ void Component::DrawProperty()
 					}
 					if (valueChanged) // 値が変更された場合のみ std::string を更新
 					{
-						*value = buffer;
-						if (value->length() > 255)
+						value = buffer;
+						if (value.length() > 255)
 						{
-							value->resize(255); // 256 - 1 (null terminator)
+							value.resize(255); // 256 - 1 (null terminator)
 						}
 					}
 					if (readOnly) ImGui::EndDisabled(); // ReadOnly 属性がある場合は描画の無効化を終了
@@ -375,18 +375,18 @@ void Component::DrawProperty()
 				else if (prop.type == "Vector2" || (prop.type.find("XMFLOAT2") != std::string::npos))
 				{
 					static Vector2 prevValue; /* 前回の値を保持する静的変数 */
-					Vector2* value = reinterpret_cast<Vector2*>(fieldAddress);
+					Vector2 value = std::any_cast<Vector2>(propertyAny);
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 					bool valueChanged = false; // 値が変更されたかを追跡するフラグ
-					valueChanged |= ImGui::DragFloat2("##vector2", &value->x);
+					valueChanged |= ImGui::DragFloat2("##vector2", &value.x);
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
-						Vector2 newValue = *value; /* 現在の値を取得 */
+						Vector2 newValue = value; /* 現在の値を取得 */
 						if (!Vector2::Equal(newValue, prevValue))
 						{
 							IMGUI_PROPERTY_COMMAND_VECTOR2(label, newValue, prevValue);
@@ -398,18 +398,18 @@ void Component::DrawProperty()
 				else if (prop.type == "Vector3" || (prop.type.find("XMFLOAT3") != std::string::npos))
 				{
 					static Vector3 prevValue; /* 前回の値を保持する静的変数 */
-					Vector3* value = reinterpret_cast<Vector3*>(fieldAddress);
+					Vector3 value = std::any_cast<Vector3>(propertyAny);
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 					bool valueChanged = false; // 値が変更されたかを追跡するフラグ
-					valueChanged |= ImGui::DragFloat3("##vector3", &value->x);
+					valueChanged |= ImGui::DragFloat3("##vector3", &value.x);
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
-						Vector3 newValue = *value; /* 現在の値を取得 */
+						Vector3 newValue = value; /* 現在の値を取得 */
 						if (!Vector3::Equal(newValue, prevValue))
 						{
 							IMGUI_PROPERTY_COMMAND_VECTOR3(label, newValue, prevValue);
@@ -425,10 +425,10 @@ void Component::DrawProperty()
 						static Quaternion prevValue; /* 前回の値を保持する静的変数 */
 						static Vector3 editorEuler; /* 編集中のオイラー角を保持する静的変数 */
 						static bool isEditing = false; /* 編集中かどうかを追跡するフラグ */
-						Quaternion* value = reinterpret_cast<Quaternion*>(fieldAddress);
+						Quaternion value = std::any_cast<Quaternion>(propertyAny);
 						if (!isEditing) /* 編集開始前に現在の値をオイラー角に変換して保存 */
 						{
-							editorEuler = Transform::QuaternionToEuler(*value);
+							editorEuler = Transform::QuaternionToEuler(value);
 						}
 
 						IMGUI_PROPERTY_EX(label, tooltip);
@@ -437,7 +437,7 @@ void Component::DrawProperty()
 						valueChanged |= ImGui::DragFloat3("##rotation", &editorEuler.x);
 						if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 						{
-							prevValue = *value;
+							prevValue = value;
 						}
 						if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 						{
@@ -462,18 +462,18 @@ void Component::DrawProperty()
 					else // Transform の rotation 以外の Quaternion フィールドはそのまま編集できるようにする
 					{
 						static Quaternion prevValue; /* 前回の値を保持する静的変数 */
-						Quaternion* value = reinterpret_cast<Quaternion*>(fieldAddress);
+						Quaternion value = std::any_cast<Quaternion>(propertyAny);
 						IMGUI_PROPERTY_EX(label, tooltip);
 						if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 						bool valueChanged = false; // 値が変更されたかを追跡するフラグ
-						valueChanged |= ImGui::DragFloat4("##quaternion", &value->x);
+						valueChanged |= ImGui::DragFloat4("##quaternion", &value.x);
 						if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 						{
-							prevValue = *value;
+							prevValue = value;
 						}
 						if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 						{
-							Quaternion newValue = *value; /* 現在の値を取得 */
+							Quaternion newValue = value; /* 現在の値を取得 */
 							if (newValue.x != prevValue.x || newValue.y != prevValue.y || newValue.z != prevValue.z || newValue.w != prevValue.w)
 							{
 								IMGUI_PROPERTY_COMMAND(label, Quaternion, newValue, prevValue,
@@ -488,18 +488,18 @@ void Component::DrawProperty()
 				else if (prop.type == "Color")
 				{
 					static Color prevValue; /* 前回の値を保持する静的変数 */
-					Color* value = reinterpret_cast<Color*>(fieldAddress);
+					Color value = std::any_cast<Color>(propertyAny);
 					IMGUI_PROPERTY_EX(label, tooltip);
 					if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 					bool valueChanged = false; // 値が変更されたかを追跡するフラグ
-					valueChanged |= ImGui::ColorEdit4("##color", &value->r);
+					valueChanged |= ImGui::ColorEdit4("##color", &value.r);
 					if (ImGui::IsItemActivated()) /* 編集開始時に前回の値を保存 */
 					{
-						prevValue = *value;
+						prevValue = value;
 					}
 					if (ImGui::IsItemDeactivatedAfterEdit()) /* 編集終了後にコマンドを発行 */
 					{
-						Color newValue = *value; /* 現在の値を取得 */
+						Color newValue = value; /* 現在の値を取得 */
 						if (newValue.r != prevValue.r || newValue.g != prevValue.g || newValue.b != prevValue.b || newValue.a != prevValue.a)
 						{
 							IMGUI_PROPERTY_COMMAND_COLOR(label, newValue, prevValue);
@@ -519,44 +519,44 @@ void Component::DrawProperty()
 							continue;
 						}
 						static ObjectId prevValue; /* 前回の値を保持する静的変数 */
-						ObjectId* value = reinterpret_cast<ObjectId*>(fieldAddress);
+						ObjectId value = std::any_cast<ObjectId>(propertyAny);
 						IMGUI_PROPERTY_EX(label, tooltip);
 						if (readOnly) ImGui::BeginDisabled(); // ReadOnly 属性がある場合は描画を無効化
 						std::string refTypeName = referenceAttr->args[0]; // Reference 属性の引数は参照先の型名 (例: "Transform", "GameObejct") を想定
 						std::string displayText = "None";
 						if (refTypeName == "GameObject")
 						{
-							const auto& refObj = ObjectManager::Find(*value);
+							const auto& refObj = ObjectManager::Find(value);
 							if (refObj)
 							{
 								const auto& refObjName = refObj ? refObj->GetName() : "Unknown";
-								displayText = (*value).IsValid() ? refObjName : "None"; // 参照先のオブジェクト名を表示に追加
+								displayText = (value).IsValid() ? refObjName : "None"; // 参照先のオブジェクト名を表示に追加
 							}
 							else
 							{
-								displayText = (*value).IsValid() ? ("Unknown(" + std::to_string((*value).Value()) + ")") : "None"; // 参照先の情報が見つからない場合の表示
+								displayText = (value).IsValid() ? ("Unknown(" + std::to_string((value).Value()) + ")") : "None"; // 参照先の情報が見つからない場合の表示
 							}
 						}
 						else
 						{
 							const auto& componentCacheMap = SceneManager::GetLoadingSceneOrCurrentScene()->objectManager->GetComponentCacheMap();
-							auto it = componentCacheMap.find(*value);
+							auto it = componentCacheMap.find(value);
 							if (it != componentCacheMap.end())
 							{
 								if (auto refComponent = it->second.lock())
 								{
 									const auto& refObj = refComponent->GetOwner();
 									const auto& refObjName = refObj ? refObj->GetName() : "Unknown";
-									displayText = (*value).IsValid() ? refObjName : "None"; // 参照先のオブジェクト名を表示に追加
+									displayText = (value).IsValid() ? refObjName : "None"; // 参照先のオブジェクト名を表示に追加
 								}
 								else
 								{
-									displayText = (*value).IsValid() ? ("Unknown(" + std::to_string((*value).Value()) + ")") : "None"; // 参照先の情報が見つからない場合の表示
+									displayText = (value).IsValid() ? ("Unknown(" + std::to_string((value).Value()) + ")") : "None"; // 参照先の情報が見つからない場合の表示
 								}
 							}
 							else
 							{
-								displayText = (*value).IsValid() ? ("Unknown(" + std::to_string((*value).Value()) + ")") : "None"; // 参照先の情報が見つからない場合の表示
+								displayText = (value).IsValid() ? ("Unknown(" + std::to_string((value).Value()) + ")") : "None"; // 参照先の情報が見つからない場合の表示
 							}
 						}
 						displayText += "(" + refTypeName + ")"; // 参照先の型名を表示に追加
@@ -593,7 +593,7 @@ void Component::DrawProperty()
 											{
 												Console::LogWarning("Dropped GameObject not found: " + std::to_string(droppedId.Value()));
 											}
-											*value = newComponentId; // フィールドにドロップされたコンポーネントの ObjectId を設定
+											value = newComponentId; // フィールドにドロップされたコンポーネントの ObjectId を設定
 											std::string refTypeDisplay = (refTypeName == "GameObject") ? "GameObject" : ("Component(" + refTypeName + ")");
 											const auto& droppedObj = ObjectManager::Find(newComponentId);
 											const auto& droppedObjName = droppedObj ? droppedObj->GetName() : "Unknown";
@@ -613,7 +613,7 @@ void Component::DrawProperty()
 									if (payload->DataSize == sizeof(ObjectId)) // ペイロードのサイズが ObjectId と同じであることを確認
 									{
 										ObjectId droppedId = *reinterpret_cast<const ObjectId*>(payload->Data); // ペイロードから ObjectId を取得
-										*value = droppedId; // フィールドにドロップされた ObjectId を設定
+										value = droppedId; // フィールドにドロップされた ObjectId を設定
 										std::string refTypeDisplay = (refTypeName == "GameObject") ? "GameObject" : ("Component(" + refTypeName + ")");
 										const auto& droppedObj = ObjectManager::Find(droppedId);
 										const auto& droppedObjName = droppedObj ? droppedObj->GetName() : "Unknown";
@@ -638,8 +638,8 @@ void Component::DrawProperty()
 							ImGui::SameLine();
 							if (ImGui::Button(("X##clear" + std::string(prop.name)).c_str()))
 							{
-								ObjectId oldValue = *value;
-								*value = ObjectId::Invalid(); // 参照をクリア
+								ObjectId oldValue = value;
+								value = ObjectId::Invalid(); // 参照をクリア
 
 								const std::string refTypeDisplay = (refTypeName == "GameObject") ? "GameObject" : ("Component(" + refTypeName + ")");
 								const auto& prevObj = ObjectManager::Find(oldValue);
@@ -675,12 +675,12 @@ void Component::DrawProperty()
 											// すべてのオブジェクトを選択肢にする
 											for (const auto& obj : allObjects)
 											{
-												bool isSelected = (*value == obj->id); // 現在の値とオブジェクトの ID が等しいかどうか
+												bool isSelected = (value == obj->id); // 現在の値とオブジェクトの ID が等しいかどうか
 												ImGuiSelectableFlags flags = 0;
 												if (ImGui::Selectable(obj->name.c_str(), isSelected, flags))
 												{
-													ObjectId oldValue = *value;
-													*value = obj->id; // フィールドに選択されたオブジェクトの ID を設定
+													ObjectId oldValue = value;
+													value = obj->id; // フィールドに選択されたオブジェクトの ID を設定
 
 													std::string refTypeDisplay = "GameObject";
 													const auto& prevObj = ObjectManager::Find(oldValue);
@@ -709,7 +709,7 @@ void Component::DrawProperty()
 													if (obj->GetComponentsByTypeName(refTypeName).size() == 1)
 													{
 														nodeFlags |= ImGuiTreeNodeFlags_Leaf; // オブジェクトが refTypeName のコンポーネントを1つしか持っていない場合は、HeaderをLeafにする
-														if (*value == refComponent->id) // 現在の値とオブジェクトの ID が等しい場合は、Headerを選択状態にする
+														if (value == refComponent->id) // 現在の値とオブジェクトの ID が等しい場合は、Headerを選択状態にする
 														{
 															nodeFlags |= ImGuiTreeNodeFlags_Selected;
 														}
@@ -720,8 +720,8 @@ void Component::DrawProperty()
 														{
 															if (ImGui::IsItemActivated()) // Headerがアクティブになった場合（クリックされた場合）
 															{
-																ObjectId oldValue = *value;
-																*value = refComponent->id; // フィールドに選択されたオブジェクトの ID を設定
+																ObjectId oldValue = value;
+																value = refComponent->id; // フィールドに選択されたオブジェクトの ID を設定
 																std::string refTypeDisplay = "Component(" + refTypeName + ")";
 																const auto& prevObj = ObjectManager::Find(oldValue);
 																const auto& prevObjName = prevObj ? prevObj->GetName() : "Unknown";
@@ -740,7 +740,7 @@ void Component::DrawProperty()
 															auto components = obj->GetComponentsByTypeName(refTypeName);
 															for (const auto& comp : components)
 															{
-																bool isSelected = (*value == comp->id); // 現在の値とオブジェクトの ID が等しいかどうか
+																bool isSelected = (value == comp->id); // 現在の値とオブジェクトの ID が等しいかどうか
 																ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf;
 																if (isSelected)
 																{
@@ -748,8 +748,8 @@ void Component::DrawProperty()
 																}
 																if (ImGui::TreeNodeEx(comp->GetTypeName().c_str(), flags))
 																{
-																	ObjectId oldValue = *value;
-																	*value = comp->id; // フィールドに選択されたオブジェクトの ID を設定
+																	ObjectId oldValue = value;
+																	value = comp->id; // フィールドに選択されたオブジェクトの ID を設定
 
 																	std::string refTypeDisplay = "Component(" + refTypeName + ")";
 																	const auto& prevObj = ObjectManager::Find(oldValue);

@@ -318,13 +318,13 @@ void GameObject::DrawProperty() {
         ImGui::SameLine(); // チェックボックスの右にTreeNodeを並べる
 
 		// コンポーネント名のラベル
-        std::string treeLabel = component->name;
+        std::string treeLabel = component->GetName();
 		// スクリプトコンポーネントの場合、スクリプト名も表示
-        if (component->name == "ScriptComponent")
+        if (treeLabel == "ScriptComponent")
         {
             if (auto scriptComp = std::dynamic_pointer_cast<ScriptComponent>(component))
             {
-                treeLabel = scriptComp->scriptName + " (" + treeLabel + ")";
+                treeLabel = scriptComp->GetTypeName() + " (" + treeLabel + ")";
             }
 		}
 		// コンポーネント名表示

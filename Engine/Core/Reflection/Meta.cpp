@@ -92,6 +92,22 @@ const ClassMeta* ReflectionRegistry::FindClass(const std::string& name)
 	return nullptr;
 }
 
+void ReflectionRegistry::UnregisterScriptClasses()
+{
+	auto& registry = GetRegistry();
+	for (auto it = registry.begin(); it != registry.end(); )
+	{
+		if (it->second.isScript)
+		{
+			it = registry.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
 std::unordered_map<std::string, ClassMeta>& ReflectionRegistry::GetRegistry()
 {
 	static std::unordered_map<std::string, ClassMeta> registry;

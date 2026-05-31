@@ -12,6 +12,87 @@
 #include "Engine/ProjectSettings.h"
 
 #include "Engine/Scripting/Exports/ScriptBridgeTypes.h"
+#include "ScriptFieldSerializer.h"
+
+extern "C" void __stdcall OnScriptClassRegistered(const ScriptClassDesc* desc)
+{
+	ClassMeta meta;
+	meta.name = desc->name;
+	if (desc->baseClass) {
+		meta.bases.push_back(desc->baseClass->name);
+	}
+	meta.isScript = true; // スクリプトクラスであることをマーク
+
+	for (int i = 0; i < desc->propertyCount; ++i) {
+		const ScriptPropertyDesc& propDesc = desc->properties[i];
+		PropertyInfo propInfo;
+		propInfo.name = propDesc.name;
+		propInfo.type = propDesc.type;
+
+		propInfo.getter = [name = std::string(propDesc.name)](void* instance) -> std::any {
+			// C# 側のスクリプトインスタンスからプロパティの値を取得するためのロジックをここに実装
+			// 例えば、ScriptSystem を通じて C# 側に値の取得をリクエストするなど
+			auto* sc = static_cast<ScriptComponent*>(instance);
+			if (auto* fieldsJson = static_cast<char*>(ScriptSystem::GetScriptFields(sc->GetGCHandle())))
+			{
+				std::string jsonStr = fieldsJson;
+				CoTaskMemFree(fieldsJson); // C# 側で StringToCoTaskMemUTF8 で確保したメモリを解放
+
+				json fields = json::parse(jsonStr, nullptr, false);
+				if (!fields.is_discarded())
+				{
+					json fieldJson;
+					for (auto& field : fields)
+					{
+						if (field.contains("name") && field["name"] == name)
+						{
+							fieldJson = field;
+							break;
+						}
+					}
+
+					if (fieldJson.is_object())
+					{
+						return CurryEngine::ScriptFieldSerializer::FromJson(fieldJson["type"], fieldJson["value"]);
+					}
+					else
+					{
+						Console::LogError("Property '" + name + "' not found in script fields.");
+						return std::any();
+					}
+				}
+				else
+				{
+					Console::LogError("Failed to parse script fields JSON: " + jsonStr);
+					return std::any();
+				}
+			}
+			else
+			{
+				Console::LogError("Failed to get script fields for property '" + name + "'.");
+				return std::any();
+			}
+			};
+		propInfo.setter = [name = std::string(propDesc.name)](void* instance, std::any value) {
+			// C# 側のスクリプトインスタンスにプロパティの値を設定するためのロジックをここに実装
+			// 例えば、ScriptSystem を通じて C# 側に値の設定をリクエストするなど
+			auto* sc = static_cast<ScriptComponent*>(instance);
+			std::string valueStr;
+			try
+			{
+				valueStr = CurryEngine::ScriptFieldSerializer::ToJson(value);
+			}
+			catch (const std::bad_any_cast& e)
+			{
+				Console::LogError("Failed to cast property value to string: " + std::string(e.what()));
+				return;
+			}
+			ScriptSystem::SetScriptField(sc->GetGCHandle(), name.c_str(), valueStr.c_str());
+			};
+
+		meta.properties.push_back(std::move(propInfo));
+	}
+}
 
 void ScriptSystem::Initialize()
 {
@@ -98,9 +179,14 @@ void ScriptSystem::Reload()
 		}
 	}
 
+	// C#スクリプトのメタ情報をクリア
+	ReflectionRegistry::UnregisterScriptClasses();
+
 	// Assembly-CSharp.dll をリロード
 	s_scriptHost->GetCallbacks().ReloadScripts("");
 
+	// C#側に今すぐ全クラスの登録を要求して、スクリプトクラスのメタデータを更新する
+	//s_scriptHost->GetCallbacks().RegisterAllScriptMeta(&OnScriptClassRegistered);
 
 	// すべてのスクリプトコンポーネントに対してスクリプトリロード処理を呼び出す
 	if (scene)

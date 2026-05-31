@@ -70,6 +70,8 @@ public:
 
 	const std::string& GetScriptName() const { return scriptName; }
 
+	void* GetGCHandle() const { return m_gcHandle; }
+
 private:
 	friend class GameObject;
 	// スクリプト名

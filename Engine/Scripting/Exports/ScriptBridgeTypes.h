@@ -35,3 +35,21 @@ struct TriggerInfoDto
 	uint64_t otherId; // トリガー相手のGameObjectのID
 	uint64_t otherColliderId; // トリガー相手のColliderのID(トリガーイベントが発生したColliderのID)
 };
+
+// スクリプトクラスのプロパティの説明
+struct ScriptPropertyDesc
+{
+	const char* name;
+	const char* type;
+};
+
+struct ScriptClassDesc
+{
+	const char* name;
+	const ScriptClassDesc* baseClass; // 継承元クラスの説明（nullptr なら継承なし）
+	const ScriptPropertyDesc* properties; // プロパティの配列（nullptr ならプロパティなし）
+	int propertyCount; // プロパティの数
+};
+
+// C#から呼ばれる関数ポインタ型 (UnmanagedCallersOnly でエクスポートされる関数のシグネチャに合わせる)
+using RegisterScriptClassFunc = void(__stdcall*)(const ScriptClassDesc* desc);

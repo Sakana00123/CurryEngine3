@@ -97,9 +97,12 @@ struct PropertyInfo
 {
 	std::string type;
 	std::string name;
-	size_t offset;
+	size_t offset = 0; // クラス内のオフセット (C++のメンバ変数のアドレスを計算するために使用。C#では不要のため0のまま)
 	std::vector<AttributeInfo> attributes{};
 
+	// --- アクセサ (C++はoffsetを使って直接アクセス、C#は P / Invoke ラムダ式でアクセス) ---
+	std::function<std::any(void* instance)> getter; // プロパティの値を取得する関数オブジェクト。引数はインスタンスポインタで、戻り値は any。
+	std::function<void(void* instance, std::any value)> setter; // プロパティの値を設定する関数オブジェクト。引数は (インスタンスポインタ, 設定する値のany) で、戻り値は void。
 
 	// 指定した属性情報を取得する関数(無かったらnullptrを返す)
 	const AttributeInfo* GetAttribute(const std::string& attrName) const {
@@ -158,6 +161,7 @@ struct ClassMeta
 	std::vector<std::string> bases;
 	std::vector<PropertyInfo> properties;
 	std::vector<MethodInfo> methods;
+	bool isScript = false; // スクリプトクラスかどうか (エディタでスクリプトクラスを特別扱いするために使用)
 
 	// 基底クラスを再帰的に検索してプロパティを取得する関数
 	const PropertyInfo* FindProperty(const std::string& propName) const;
@@ -174,7 +178,8 @@ public:
 	static void Register(const ClassMeta& meta);
 	// クラス検索
 	static const ClassMeta* FindClass(const std::string& name);
-
+	// 全スクリプトのメタ情報をクリア
+	static void UnregisterScriptClasses();
 private:
 	static std::unordered_map<std::string, ClassMeta>& GetRegistry();
 };
@@ -284,7 +289,20 @@ auto MakeInvoker(TRet (TClass::*fn)(TArgs...) const)
 
 
 #define REGISTER_PROPERTY(ClassName, propName, propType) \
-			meta.properties.push_back({ #propType, #propName, GetOffset(&ClassName::propName), {} });
+    { \
+        PropertyInfo p; \
+        p.type   = #propType; \
+        p.name   = #propName; \
+        p.offset = GetOffset(&ClassName::propName); \
+		p.attributes = {}; /* 属性は空のまま */ \
+        p.getter = [](void* inst) -> std::any { \
+            return static_cast<ClassName*>(inst)->propName; \
+        }; \
+        p.setter = [](void* inst, std::any val) { \
+            static_cast<ClassName*>(inst)->propName = std::any_cast<propType>(val); \
+        }; \
+        meta.properties.push_back(p); \
+    }
 
 #define REGISTER_METHOD(ClassName, MethodName, ReturnType, ...)                                                           \
 	{                                                                                                                     \
@@ -325,6 +343,12 @@ auto MakeInvoker(TRet (TClass::*fn)(TArgs...) const)
 			p.name = #propName; \
 			p.offset = GetOffset(&ClassName::propName); \
 			p.attributes = std::vector<AttributeInfo>{ __VA_ARGS__ }; \
+			p.getter = [](void* inst) -> std::any { \
+			    return static_cast<ClassName*>(inst)->propName; \
+			}; \
+			p.setter = [](void* inst, std::any val) { \
+			    static_cast<ClassName*>(inst)->propName = std::any_cast<propType>(val); \
+			}; \
 			meta.properties.push_back(p); \
 		}
 
