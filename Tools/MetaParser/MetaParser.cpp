@@ -36,10 +36,16 @@ int main(int argc, char** argv)
 		auto files = parser.ParseDirectory(dir);
 		allFiles.insert(allFiles.end(), files.begin(), files.end());
 	}
+
+	// .cpp, .cs 生成の対象外とするクラスのリスト(Object や GameObject など、手動で定義されているクラスは生成しない)
+	std::vector<std::string> ignoreClasses = {
+		"Vector2", "Vector3", "Vector4", "Quaternion", "Matrix4x4",
+		"Color", "Transform", "GameObject", "Component", "Object",
+	};
 	
 	// コード生成器を作成してコード生成
 	Generater generater(outputJson);
-	generater.Generate(allFiles);
+	generater.Generate(allFiles, ignoreClasses);
 
 	// C# コード生成器を作成してコード生成
 	std::filesystem::path typeMapPath = std::filesystem::current_path() / "type_map.json";
@@ -54,10 +60,6 @@ int main(int argc, char** argv)
 
 	std::vector<FileInfo> csFiles;
 
-	std::vector<std::string> ignoreClasses = {
-		"Vector2", "Vector3", "Vector4", "Quaternion", "Matrix4x4",
-		"Color", "Transform", "GameObject", "Component", "Object", "Camera",
-	};
 	// 基底クラスを Componentに変更するクラスのリスト(Component を継承しているクラスで、Component として扱いたいクラスを指定)
 	std::vector<std::string> changeBasesToComponent = {
 		"RectTransform"

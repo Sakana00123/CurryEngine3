@@ -632,6 +632,41 @@ void ScriptComponent::DrawProperty()
                     )
                 );
             }
+			// ... ボタン (シーン内のオブジェクトを選択するためのもの)
+            ImGui::SameLine();
+            if (ImGui::Button("...")) {
+                // シーン内のオブジェクトを選択するためのポップアップを表示
+                ImGui::OpenPopup(("Select GameObject##" + name).c_str());
+            }
+            if (ImGui::BeginPopup(("Select GameObject##" + name).c_str()))
+            {
+                Scene* scene = GetOwner()->GetScene();
+                for (const auto& obj : scene->GetObjectManager()->GetAll())
+                {
+                    if (!obj) continue;
+                    if (ImGui::Selectable(obj->GetName().c_str()))
+                    {
+                        ObjectId newValue = obj->GetId();
+                        if (newValue != v) // 値が変更された場合のみコマンドを追加
+                        {
+                            CurryEngine::History::ExecuteCommand(
+                                std::make_shared<CurryEngine::SetValueCommand<std::pair<std::string, ObjectId>>>(
+                                    "Set " + name + " GameObject reference",
+                                    [this](const std::pair<std::string, ObjectId>& pair) {
+                                        std::string valueStr = "GameObject(objectId: " + std::to_string(pair.second.Value()) + ")";
+                                        // コマンドの実行とUndoの両方で呼び出されるラムダ関数。スクリプトフィールドを更新する。
+                                        ScriptSystem::SetScriptField(m_gcHandle, pair.first.c_str(),
+                                            valueStr.c_str());
+                                    },
+                                    std::make_pair(name, v), // 変更前の値
+                                    std::make_pair(name, newValue) // 変更後の値
+                                )
+                            );
+                        }
+                    }
+                }
+                ImGui::EndPopup();
+            }
         }
         else if (isComponentReference) // Component 参照用の特別な表示方法
         {
@@ -748,6 +783,55 @@ void ScriptComponent::DrawProperty()
                 );
 				v = ObjectId::Invalid();
 				ownerV = ObjectId::Invalid();
+            }
+			// ... ボタン (シーン内のオブジェクトを選択するためのもの)
+            ImGui::SameLine();
+            if (ImGui::Button("...")) {
+                // シーン内のオブジェクトを選択するためのポップアップを表示
+                ImGui::OpenPopup(("Select Component##" + name).c_str());
+            }
+            if (ImGui::BeginPopup(("Select Component##" + name).c_str()))
+            {
+                Scene* scene = GetOwner()->GetScene();
+                for (const auto& obj : scene->GetObjectManager()->GetAll())
+                {
+                    if (!obj) continue;
+                    for (const auto& comp : obj->GetAllComponents())
+                    {
+						if (comp->GetTypeName() == typeName) // ComponentのGetName()は型名を返す想定
+                        {
+                            std::string compLabel = obj->GetName() + " - " + comp->GetTypeName();
+                            if (ImGui::Selectable(compLabel.c_str()))
+                            {
+                                ObjectId newValue = comp->GetId();
+                                ObjectId newOwnerId = comp->GetOwner()->GetId();
+                                if (newValue != v) // 値が変更された場合のみコマンドを追加
+                                {
+                                    CurryEngine::History::ExecuteCommand(
+                                        std::make_shared<CurryEngine::SetValueCommand<std::pair<std::string, std::pair<ObjectId, ObjectId>>>>(
+                                            "Set " + name + " Component reference",
+                                            [this](const std::pair<std::string, std::pair<ObjectId, ObjectId>>& pair) {
+                                                std::string valueStr = "Component(objectId: " + std::to_string(pair.second.first.Value()) + ", ownerId: " + std::to_string(pair.second.second.Value()) + ")";
+                                                // コマンドの実行とUndoの両方で呼び出されるラムダ関数。スクリプトフィールドを更新する。
+                                                ScriptSystem::SetScriptField(m_gcHandle, pair.first.c_str(),
+                                                    valueStr.c_str());
+                                            },
+                                            std::make_pair(name, std::make_pair(v, ownerV)), // 変更前の値
+                                            std::make_pair(name, std::make_pair(newValue, newOwnerId)) // 変更後の値
+                                        )
+                                    );
+                                    // スクリプトフィールドを更新する
+                                    std::string valueStr = "Component(objectId: " + std::to_string(newValue.Value()) + ", ownerId: " + std::to_string(newOwnerId.Value()) + ")";
+                                    ScriptSystem::SetScriptField(m_gcHandle, name.c_str(),
+                                        valueStr.c_str());
+                                }
+                                v = newValue;
+                                ownerV = newOwnerId;
+                            }
+                        }
+                    }
+                }
+                ImGui::EndPopup();
             }
         }
 

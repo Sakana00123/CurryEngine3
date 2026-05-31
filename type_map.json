@@ -28,6 +28,5 @@
   "DirectX::XMFLOAT4":    { "csType": "Color",      "source": "generate" },
   "Color":                { "csType": "Color",      "source": "generate" },
   "Quaternion":           { "csType": "Quaternion", "source": "existing" },
-  "Matrix4x4":            { "csType": "Matrix4x4",  "source": "existing" },
-  "ForceMode":            { "csType": "ForceMode",  "source": "generate" }
+  "Matrix4x4":            { "csType": "Matrix4x4",  "source": "existing" }
 }

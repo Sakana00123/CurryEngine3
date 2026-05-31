@@ -284,10 +284,23 @@ void Parser::ExtractMethods(const std::string& text, size_t classPos, ClassInfo&
         method.name = m[2].str();
 
         std::string argsStr = m[3].str();
-        std::regex argRegex(R"(([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+))");
+        // ó·: "ForceMode mode = ForceMode::Force"  Å®  type="ForceMode", name="mode", default="ForceMode::Force"
+        // ó·: "float value = 0.0f"                 Å®  type="float",     name="value", default="0.0f"
+        std::regex argRegex(R"(([A-Za-z0-9_:<>]+)\s+([A-Za-z0-9_]+)\s*(?:=\s*([^,)]+))?)");
         auto aIt = std::sregex_iterator(argsStr.begin(), argsStr.end(), argRegex);
         for (; aIt != std::sregex_iterator(); ++aIt)
-            method.parameters.emplace_back((*aIt)[1].str(), (*aIt)[2].str());
+        {
+            //method.parameters.emplace_back((*aIt)[1].str(), (*aIt)[2].str());
+			ParameterInfo param;
+			param.type = (*aIt)[1].str();
+			param.name = (*aIt)[2].str();
+			if ((*aIt)[3].matched)
+            {
+                param.defaultValue = (*aIt)[3].str();
+				Trim(param.defaultValue);
+            }
+            method.parameters.push_back(param);
+        }
 
         info.methods.push_back(method);
         std::cout << "  Method: " << method.returnType << " " << method.name << "\n";
@@ -557,8 +570,9 @@ void Parser::WriteJson(const ClassInfo& info, const std::string& outPath)
         for (const auto& p : m.parameters)
         {
             auto& pj = paramArr.emplace_back();
-            pj["type"] = p.first;
-            pj["name"] = p.second;
+            pj["type"] = p.type;
+            pj["name"] = p.name;
+			pj["defaultValue"] = p.defaultValue;
         }
         mj["parameters"] = paramArr;
     }

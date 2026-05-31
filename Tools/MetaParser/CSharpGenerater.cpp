@@ -77,12 +77,40 @@ std::string CSharpGenerater::ResolveMarshalAttr(const std::string& cppType) cons
     return "";
 }
 
+std::string CSharpGenerater::ConvertDefaultValue(
+    const std::string& cppDefault, const std::string& cppType) const
+{
+    // 固定変換テーブルを先に引く
+    auto it = defaultValueMap.find(cppDefault);
+    if (it != defaultValueMap.end()) return it->second;
+
+    // "EnumName::Value" → "EnumName.Value"
+    std::string result = cppDefault;
+    size_t pos = 0;
+    while ((pos = result.find("::", pos)) != std::string::npos)
+    {
+        result.replace(pos, 2, ".");
+        pos += 1;
+    }
+
+    // 数値リテラル末尾の f を除去（0.0f → 0.0）
+    if (result.size() >= 2 && result.back() == 'f' &&
+        std::isdigit(static_cast<unsigned char>(result[result.size() - 2])))
+    {
+        result.pop_back();
+    }
+
+    return result;
+}
+
 // ============================================================
 //  Generate（エントリポイント）
 // ============================================================
 
 void CSharpGenerater::Generate(const std::vector<FileInfo>& files)
 {
+    knownEnums = BuildKnownEnums(files);
+
     for (const auto& file : files)
     {
         for (const auto& cls : file.classes)
@@ -104,7 +132,7 @@ void CSharpGenerater::Generate(const std::vector<FileInfo>& files)
 //  namespace CurryEngine.Interop;
 //  internal static partial class NativeMethods
 //  {
-//      [LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong ownerId);
+//      [LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong objectId);
 //      ...
 //  }
 // ============================================================
@@ -139,7 +167,7 @@ void CSharpGenerater::GenerateNativeMethods(const ClassInfo& info)
 //  namespace CurryEngine;
 //  public class Rigidbody : Component
 //  {
-//      public float mass { get => NativeMethods.Rigidbody_GetMass(ownerId); ... }
+//      public float mass { get => NativeMethods.Rigidbody_GetMass(objectId); ... }
 //      ...
 //  }
 // ============================================================
@@ -236,8 +264,8 @@ void CSharpGenerater::GenerateStruct(const StructInfo& info)
 //
 //  フィールド1つに対して Get/Set の LibraryImport を出力
 //  例:
-//    [LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong ownerId);
-//    [LibraryImport(Dll)] internal static partial void  Rigidbody_SetMass(ulong ownerId, float value);
+//    [LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong objectId);
+//    [LibraryImport(Dll)] internal static partial void  Rigidbody_SetMass(ulong objectId, float value);
 // ============================================================
 
 std::string CSharpGenerater::BuildFieldImportLines(
@@ -259,7 +287,7 @@ std::string CSharpGenerater::BuildFieldImportLines(
         oss << ind << "[return: MarshalAs(" << marshal << ")]\n";
     oss << ind << "[LibraryImport(Dll)] "
         << "internal static partial " << csType << " "
-        << prefix << "Get" << capName << "(ulong ownerId);\n";
+        << prefix << "Get" << capName << "(ulong objectId);\n";
 
     // Setter
     std::string setParam = marshal.empty()
@@ -267,7 +295,7 @@ std::string CSharpGenerater::BuildFieldImportLines(
         : "[MarshalAs(" + marshal + ")] " + csType + " value";
     oss << ind << "[LibraryImport(Dll)] "
         << "internal static partial void "
-        << prefix << "Set" << capName << "(ulong ownerId, " << setParam << ");\n";
+        << prefix << "Set" << capName << "(ulong objectId, " << setParam << ");\n";
 
     return oss.str();
 }
@@ -277,26 +305,28 @@ std::string CSharpGenerater::BuildFieldImportLines(
 //
 //  メソッド1つの LibraryImport シグネチャを出力
 //  例:
-//    [LibraryImport(Dll)] internal static partial void Rigidbody_AddForce(ulong ownerId, Vector3 force, int mode);
+//    [LibraryImport(Dll)] internal static partial void Rigidbody_AddForce(ulong objectId, Vector3 force, int mode);
 // ============================================================
 
 std::string CSharpGenerater::BuildLibraryImportLine(
     const std::string& className, const MethodInfo& m, int indent) const
 {
-    std::string csRet = ResolveCsType(m.returnType);
+	bool retIsEnum = IsEnumType(m.returnType, knownEnums, typeMap);
+    std::string csRet = retIsEnum ? "int" : ResolveCsType(m.returnType);
     std::string retMarshal = ResolveMarshalAttr(m.returnType);
     std::string ind = Indent(indent);
 
     std::ostringstream params;
-    params << "ulong ownerId";
-    for (const auto& [pType, pName] : m.parameters)
+    params << "ulong objectId";
+    for (const auto& p : m.parameters)
     {
-        std::string csPType = ResolveCsType(pType);
-        std::string pMarshal = ResolveMarshalAttr(pType);
+		bool pIsEnum = IsEnumType(p.type, knownEnums, typeMap);
+        std::string csPType = pIsEnum ? "int" : ResolveCsType(p.type);
+        std::string pMarshal = ResolveMarshalAttr(p.type);
         params << ", ";
         if (!pMarshal.empty())
             params << "[MarshalAs(" << pMarshal << ")] ";
-        params << csPType << " " << pName;
+        params << csPType << " " << p.name;
     }
 
     std::ostringstream oss;
@@ -315,8 +345,8 @@ std::string CSharpGenerater::BuildLibraryImportLine(
 //  例:
 //    public float mass
 //    {
-//        get => NativeMethods.Rigidbody_GetMass(ownerId);
-//        set => NativeMethods.Rigidbody_SetMass(ownerId, value);
+//        get => NativeMethods.Rigidbody_GetMass(objectId);
+//        set => NativeMethods.Rigidbody_SetMass(objectId, value);
 //    }
 // ============================================================
 
@@ -343,8 +373,8 @@ std::string CSharpGenerater::BuildPropertyImpl(
 
     oss << ind << "public " << csType << " " << f.name << "\n";
     oss << ind << "{\n";
-    oss << ind2 << "get => " << nm << "." << className << "_Get" << capName << "(ownerId);\n";
-    oss << ind2 << "set => " << nm << "." << className << "_Set" << capName << "(ownerId, value);\n";
+    oss << ind2 << "get => " << nm << "." << className << "_Get" << capName << "(objectId);\n";
+    oss << ind2 << "set => " << nm << "." << className << "_Set" << capName << "(objectId, value);\n";
     oss << ind << "}\n";
 
     return oss.str();
@@ -355,7 +385,7 @@ std::string CSharpGenerater::BuildPropertyImpl(
 //
 //  例:
 //    public void AddForce(Vector3 force, ForceMode mode = default)
-//        => NativeMethods.Rigidbody_AddForce(ownerId, force, (int)mode);
+//        => NativeMethods.Rigidbody_AddForce(objectId, force, (int)mode);
 // ============================================================
 
 std::string CSharpGenerater::BuildMethodImpl(
@@ -368,27 +398,36 @@ std::string CSharpGenerater::BuildMethodImpl(
     // C# シグネチャの引数リスト
     std::ostringstream sigParams;
     std::ostringstream callParams;
-    callParams << "ownerId";
+    callParams << "objectId";
     bool first = true;
-    for (const auto& [pType, pName] : m.parameters)
+    for (const auto& p : m.parameters)
     {
-        std::string csPType = ResolveCsType(pType);
+        std::string csPType = ResolveCsType(p.type);
         if (!first) sigParams << ", ";
-        sigParams << csPType << " " << pName;
+        sigParams << csPType << " " << p.name;
+
+		// デフォルト引数がある場合は C# でも同じデフォルト値を指定
+        if (!p.defaultValue.empty())
+        {
+            std::string csDefault = ConvertDefaultValue(p.defaultValue, p.type);
+            sigParams << " = " << csDefault;
+		}
         first = false;
 
         // enum 型は int にキャストして渡す
-        auto it = typeMap.find(pType);
-        bool isEnum = (it != typeMap.end() && it->second.source == TypeSource::Generate);
+		bool isEnum = IsEnumType(p.type, knownEnums, typeMap);
         callParams << ", ";
         if (isEnum) callParams << "(int)";
-        callParams << pName;
+        callParams << p.name;
     }
 
     std::ostringstream oss;
     oss << ind << "public " << csRet << " " << m.name << "(" << sigParams.str() << ")\n";
+	bool retIsEnum = IsEnumType(m.returnType, knownEnums, typeMap);
     oss << ind << Indent(1);
-    if (csRet != "void")
+    if (retIsEnum)
+		oss << "=> (" << csRet << ") " << nm << "." << className << "_" << m.name << "(" << callParams.str() << ");\n";
+    else if (csRet != "void")
         oss << "=> " << nm << "." << className << "_" << m.name << "(" << callParams.str() << ");\n";
     else
         oss << "=> " << nm << "." << className << "_" << m.name << "(" << callParams.str() << ");\n";

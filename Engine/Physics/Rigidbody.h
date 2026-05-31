@@ -99,6 +99,7 @@ public:
 	 * @param force 加える力のベクトル。
 	 * @param mode 力の加え方を指定するForceMode。デフォルトはForceで、継続的な力を加えるモードです。
 	 */
+	C_FUNCTION()
 	void AddForce(Vector3 force, ForceMode mode);
 
 	/**
@@ -107,6 +108,7 @@ public:
 	 * @param position 力を加える位置のワールド座標。
 	 * @param mode 力の加え方を指定するForceMode。デフォルトはForceで、継続的な力を加えるモードです。
 	 */
+	C_FUNCTION()
 	void AddForceAtPosition(Vector3 force, Vector3 position, ForceMode mode);
 
 	/**
@@ -114,30 +116,35 @@ public:
 	 * @param torque 加えるトルクのベクトル。
 	 * @param mode トルクの加え方を指定するForceMode。デフォルトはForceで、継続的なトルクを加えるモードです。
 	 */
+	C_FUNCTION()
 	void AddTorque(Vector3 torque, ForceMode mode);
 
 	/**
 	 * @brief 剛体の速度を直接設定します。
 	 * @param velocity 設定する速度のベクトル。
 	 */
+	C_FUNCTION()
 	void SetVelocity(Vector3 velocity);
 
 	/**
 	 * @brief 剛体の現在の速度を取得します。
 	 * @return 現在の速度のベクトル。
 	 */
+	C_FUNCTION()
 	Vector3 GetVelocity() const;
 
 	/**
 	 * @brief 剛体の角速度を直接設定します。
 	 * @param angularVelocity 設定する角速度のベクトル。
 	 */
+	C_FUNCTION()
 	void SetAngularVelocity(Vector3 angularVelocity);
 
 	/**
 	 * @brief 剛体の現在の角速度を取得します。
 	 * @return 現在の角速度のベクトル。
 	 */
+	C_FUNCTION()
 	Vector3 GetAngularVelocity() const;
 
 	/**
@@ -194,17 +201,20 @@ public:
 	/**
 	 * @brief 剛体をアクティブな状態にします。アクティブな剛体は物理シミュレーションの影響を受け、動作します。
 	 */
+	C_FUNCTION()
 	void WakeUp();
 
 	/**
 	 * @brief 剛体をスリープ状態にします。スリープ状態の剛体は物理シミュレーションの影響を受けず、計算コストを削減できます。
 	 */
+	C_FUNCTION()
 	void PutToSleep();
 
 	/**
 	 * @brief 剛体がスリープ状態かどうかを取得します。
 	 * @return trueの場合はスリープ状態、falseの場合はアクティブな状態です。
 	 */
+	C_FUNCTION()
 	bool IsSleeping() const;
 
 	/**

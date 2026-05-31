@@ -6,6 +6,8 @@ public class TestBehaviour : Behaviour
 {
     [SerializeField] private Vector3 initialPos = new Vector3(3, 3, 3);
     [SerializeField] private float speed = 2.0f;
+    [SerializeField] private float volume = 0.3f;
+    [SerializeField] private AudioSource? audioSource;
 
     Rigidbody? rigidbody = null;
 
@@ -47,6 +49,8 @@ public class TestBehaviour : Behaviour
             //rigidbody.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
             Debug.Log("Jump!");
         }
+
+        audioSource?.SetVolume(volume);
 
     }
 

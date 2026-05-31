@@ -202,6 +202,8 @@ popd</Command>
     <ClCompile Include="Engine\Rendering\Pipeline\Pass\RenderPass.cpp" />
     <ClCompile Include="Engine\Rendering\Pipeline\Pass\TransitionPass.cpp" />
     <ClCompile Include="Engine\Rendering\Renderers\TrailRenderer.cpp" />
+    <ClCompile Include="Engine\Scripting\Exports\GameObjectExports.cpp" />
+    <ClCompile Include="Engine\Scripting\Exports\TransformExports.cpp" />
     <ClCompile Include="Engine\UI\CanvasScaler.cpp" />
     <ClCompile Include="Engine\UI\Graphic.cpp" />
     <ClCompile Include="Engine\UI\GridLayoutGroup.cpp" />

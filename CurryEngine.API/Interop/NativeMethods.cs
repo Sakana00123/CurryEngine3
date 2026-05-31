@@ -145,12 +145,12 @@ internal static partial class NativeMethods
 
 
     // -------------------------------------------- Rigidbody -----------------------------------------
-    [LibraryImport(Dll)] internal static partial void Rigidbody_AddForce(ulong ownerId, Vector3 force, int forceMode);
-    [LibraryImport(Dll)] internal static partial void Rigidbody_AddTorque(ulong ownerId, Vector3 torque, int forceMode);
-    [LibraryImport(Dll)] internal static partial Vector3 Rigidbody_GetVelocity(ulong ownerId);
-    [LibraryImport(Dll)] internal static partial void Rigidbody_SetVelocity(ulong ownerId, Vector3 velocity);
-    [LibraryImport(Dll)] internal static partial Vector3 Rigidbody_GetAngularVelocity(ulong ownerId);
-    [LibraryImport(Dll)] internal static partial void Rigidbody_SetAngularVelocity(ulong ownerId, Vector3 angularVelocity);
+    //[LibraryImport(Dll)] internal static partial void Rigidbody_AddForce(ulong ownerId, Vector3 force, int forceMode);
+    //[LibraryImport(Dll)] internal static partial void Rigidbody_AddTorque(ulong ownerId, Vector3 torque, int forceMode);
+    //[LibraryImport(Dll)] internal static partial Vector3 Rigidbody_GetVelocity(ulong ownerId);
+    //[LibraryImport(Dll)] internal static partial void Rigidbody_SetVelocity(ulong ownerId, Vector3 velocity);
+    //[LibraryImport(Dll)] internal static partial Vector3 Rigidbody_GetAngularVelocity(ulong ownerId);
+    //[LibraryImport(Dll)] internal static partial void Rigidbody_SetAngularVelocity(ulong ownerId, Vector3 angularVelocity);
     //[LibraryImport(Dll)] internal static partial void Rigidbody_SetMass(ulong ownerId, float mass);
     //[LibraryImport(Dll)] internal static partial float Rigidbody_GetMass(ulong ownerId);
     //[LibraryImport(Dll)] internal static partial void Rigidbody_SetDrag(ulong ownerId, float drag);

@@ -3,25 +3,7 @@
 #include <unordered_map>
 #include <vector>
 #include "ParseInfo.h"
-
-
-// ============================================================
-//  型マッピングエントリ
-// ============================================================
-
-enum class TypeSource
-{
-    Primitive, // ulong など C# プリミティブに直接マップ
-    Existing,  // C# 側に既存定義がある (Vector3 など)
-    Generate,  // このツールで生成する (enum/struct)
-};
-
-struct TypeMapping
-{
-    std::string csType;   // C# での型名
-    TypeSource  source = TypeSource::Primitive;
-    std::string marshalAttr; // [MarshalAs(...)] が必要な場合
-};
+#include "GeneraterUtils.h"
 
 // ============================================================
 //  CSharpGenerater
@@ -50,8 +32,20 @@ private:
     std::string csNamespace; // ラッパーの名前空間
     std::string dllConstant; // NativeMethods.Dll 参照文字列
 
+	// 既知の enum 名のセット (C_ENUM で収集されたもの)
+    std::unordered_set<std::string> knownEnums;
     // C++ 型名 → TypeMapping
     std::unordered_map<std::string, TypeMapping> typeMap;
+
+    // C++ のデフォルト値表現を C# に変換するテーブル
+    // 例: "ForceMode::Force" → "ForceMode.Force"
+    //     "true" → "true"（そのまま）
+    //     "nullptr" → "null"
+    std::unordered_map<std::string, std::string> defaultValueMap = {
+        { "nullptr", "null"    },
+        { "true",    "true"    },
+        { "false",   "false"   },
+    };
 
     // --- 型マップ読み込み ---
     void LoadTypeMap(const std::string& path);
@@ -62,6 +56,9 @@ private:
 
     // bool など MarshalAs が必要な型かチェックして属性文字列を返す ("" なら不要)
     std::string ResolveMarshalAttr(const std::string& cppType) const;
+
+	// デフォルト引数の C++ 値を C# の値に変換 (未登録の値はそのまま返す)
+	std::string ConvertDefaultValue(const std::string& cppDefault, const std::string& cppType) const;
 
     // --- 生成メソッド ---
     // NativeMethods.Xxx.g.cs (partial LibraryImport)

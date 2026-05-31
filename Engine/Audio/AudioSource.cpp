@@ -188,15 +188,17 @@ void AudioSource::SetVolume(float volume)
 	_ASSERT_EXPR(SUCCEEDED(hr), HrTrace(hr));
 }
 
-void AudioSource::GetVolume(float& volume)
+float AudioSource::GetVolume()
 {
+	float volume = 0.0f;
 	//バッファやソースボイスが設定されていなければ何もしない
 	if (!m_SptrBuffer || !sourceVoice)
 	{
-		volume = this->volume;
-		return;
+		return volume;
 	}
 	sourceVoice->GetVolume(&volume);
+	this->volume = volume;
+	return volume;
 }
 
 void AudioSource::SetUse3DAudio(bool use3D)
@@ -535,7 +537,7 @@ void AudioSource::DrawProperty()
 		}
 
 		// 音量スライダー
-		GetVolume(volume);
+		volume = GetVolume();
 		if (ImGui::SliderFloat("Volume", &volume, 0, 1)) {
 			SetVolume(volume);
 		}

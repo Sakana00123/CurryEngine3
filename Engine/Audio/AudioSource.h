@@ -42,39 +42,46 @@ public:
 	/**
 	 * @brief 再生を開始します。
 	 */
+	C_FUNCTION()
 	void Play();
 	/**
 	 * @brief 再生を停止します。
 	 * @param playTails テイル（残響等）を再生してから停止するか。
 	 */
+	C_FUNCTION()
 	void Stop(bool playTails = true);
 
 	/**
 	 * @brief 再生を一時停止します。
 	 */
+	C_FUNCTION()
 	void Pause();
 
 	/**
 	 * @brief 再生を再開します。
 	 */
+	C_FUNCTION()
 	void Resume();
 
 	/**
 	 * @brief 音量を設定します。
 	 * @param volume 音量（0-1 目安）。
 	 */
+	C_FUNCTION()
 	void SetVolume(float volume);
 
 	/**
 	 * @brief 現在の音量を取得します。
 	 * @return 音量（0-1 目安）。
 	 */
-	void GetVolume(float& volume);
+	C_FUNCTION()
+	float GetVolume();
 
 	/**
 	 * @brief 再生中かを返します。
 	 * @return `true` で再生中、`false` で停止中。
 	 */
+	C_FUNCTION()
 	bool IsPlaying();
 
 	/**
@@ -94,24 +101,28 @@ public:
 	 * @brief パンを設定します。
 	 * @param pan パン（-1.0 左、0 中央、1.0 右）。
 	 */
+	C_FUNCTION()
 	void SetPan(float pan);
 
 	/**
 	 * @brief 現在のパンを取得します。
 	 * @return パン（-1.0 左、0 中央、1.0 右）。
 	 */
+	C_FUNCTION()
 	float GetPan() const { return m_Pan; }
 
 	/**
 	 * @brief ループ再生の有無を設定します。
 	 * @param loop `true` でループ再生、`false` で一回再生。
 	 */
+	C_FUNCTION()
 	void SetLoop(bool loop) { this->loop = loop; }
 
 	/**
 	 * @brief ループ再生の有無を取得します。
 	 * @return `true` でループ再生、`false` で一回再生。
 	 */
+	C_FUNCTION()
 	bool IsLoop() const { return loop; }
 
 	/**
@@ -119,6 +130,7 @@ public:
 	 * @param begin ループ開始位置（秒）。
 	 * @param length ループ長（begin からの長さ）。
 	 */
+	C_FUNCTION()
 	void SetLoopOption(float begin, float length);
 
 	/**

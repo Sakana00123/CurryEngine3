@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="CSharpGenerater.h" />
     <ClInclude Include="Generater.h" />
+    <ClInclude Include="GeneraterUtils.h" />
     <ClInclude Include="ParseInfo.h" />
     <ClInclude Include="Parser.h" />
   </ItemGroup>

@@ -15,11 +15,18 @@ struct FieldInfo
 	std::vector<AttributeInfo> attributes;
 };
 
+struct ParameterInfo
+{
+	std::string type;
+	std::string name;
+	std::string defaultValue; // デフォルト引数の値（なければ空文字列）
+};
+
 struct MethodInfo
 {
 	std::string returnType;
 	std::string name;
-	std::vector<std::pair<std::string, std::string>> parameters; // type, name
+	std::vector<ParameterInfo> parameters;
 	std::vector<AttributeInfo> attributes;
 };
 

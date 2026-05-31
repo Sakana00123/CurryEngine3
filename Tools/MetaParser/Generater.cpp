@@ -14,8 +14,10 @@ Generater::Generater(const std::string& outputDir)
 	}
 }
 
-void Generater::Generate(const std::vector<FileInfo>& files)
+void Generater::Generate(const std::vector<FileInfo>& files, const std::vector<std::string>& ignoreClasses)
 {
+	knownEnums = BuildKnownEnums(files);
+
 	// 各ファイルごとに処理
 	for (const auto& info : files)
 	{
@@ -52,7 +54,20 @@ void Generater::Generate(const std::vector<FileInfo>& files)
 			std::replace(relativeSolutionPathStr.begin(), relativeSolutionPathStr.end(), '\\', '/');
 
 			GenerateHeader(classInfo, headerPath, relativePathFromHeader);
-			GenerateSource(classInfo, sourcePath, relativePathFromSource, relativeSolutionPathStr);
+			// 一部のクラスは除外する(GameObjectなどのコンポーネントを継承しないクラスは生成しない)
+			bool allowSourceGen = true;
+			for (const auto& ignore : ignoreClasses)
+			{
+				if (classInfo.name == ignore)
+				{
+					allowSourceGen = false;
+					break;
+				}
+			}
+			if (allowSourceGen)
+			{
+				GenerateSource(classInfo, sourcePath, relativePathFromSource, relativeSolutionPathStr);
+			}
 		}
 	}
 
@@ -140,9 +155,10 @@ void Generater::GenerateHeader(const ClassInfo& info, const std::string& outPath
 			for (size_t i = 0; i < method.parameters.size(); i++)
 			{
 				const auto& param = method.parameters[i];
-				ofs << param.first << " " << param.second;
+				ofs << param.type << " " << param.name;
 				if (i < method.parameters.size() - 1)
 					ofs << ", ";
+				// TODO: デフォルト引数もマクロに渡す必要があるかもしれない（現状は無視している）
 			}
 		}
 		else
@@ -195,22 +211,45 @@ void Generater::GenerateSource(const ClassInfo& info, const std::string& outPath
 		std::string fieldName = field.name;
 		if (!capName.empty()) capName[0] = static_cast<char>(std::toupper(capName[0]));
 		// フィールドの型
-		std::string type = field.type;
+		bool fieldIsEnum = IsEnumType(field.type, knownEnums, typeMap);
+		std::string exportType = fieldIsEnum ? "int" : field.type;
 
 		// Get 関数
-		ofs << "// 例: " << className << " の " << fieldName << " フィールドの Get 関数\n";
-		ofs << "extern \"""C\"" << " __declspec(dllexport) " << type << " " << className << "_Get" << capName << "(uint64_t objectId)\n{\n";
+		ofs << "extern \"""C\"" << " __declspec(dllexport) " << exportType << " " << className << "_Get" << capName << "(uint64_t objectId)\n{\n";
 		ofs << "    if (auto comp = Get" << className << "ById(objectId)) {\n";
-		ofs << "        return comp->" << fieldName << ";\n";
+		if (fieldIsEnum)
+		{
+			// 列挙型は int にキャストして返す
+			ofs << "        return static_cast<int>(comp->" << fieldName << ");\n";
+		}
+		else
+		{
+			ofs << "        return comp->" << fieldName << ";\n";
+		}
 		ofs << "    }\n";
-		ofs << "    return " << type << "{}; // オブジェクトが見つからない場合の戻り値\n";
+		if (fieldIsEnum)
+		{
+			// 列挙型は int から元の型にキャストして戻り値を返す
+			ofs << "    return static_cast<int>(" << field.type << "{}); // オブジェクトが見つからない場合の戻り値\n";
+		}
+		else
+		{
+			ofs << "    return " << exportType << "{}; // オブジェクトが見つからない場合の戻り値\n";
+		}
 		ofs << "}\n";
 		// Set 関数
-		ofs << "// 例: " << className << " の " << fieldName << " フィールドの Set 関数\n";
 		ofs << "extern \"""C\"" << " __declspec(dllexport) void " << className << "_Set" << capName << "(uint64_t objectId, "
-			<< type << " value)\n{\n";
+			<< exportType << " value)\n{\n";
 		ofs << "    if (auto comp = Get" << className << "ById(objectId)) {\n";
-		ofs << "        comp->" << fieldName << " = value;\n";
+		if (fieldIsEnum)
+		{
+			// 列挙型は int から元の型にキャストして代入
+			ofs << "        comp->" << fieldName << " = static_cast<" << field.type << ">(value);\n";
+		}
+		else
+		{
+			ofs << "        comp->" << fieldName << " = value;\n";
+		}
 		ofs << "    }\n";
 		ofs << "}\n";
 	}
@@ -218,11 +257,16 @@ void Generater::GenerateSource(const ClassInfo& info, const std::string& outPath
 	// 他の API 関数も同様に実装していく
 	for (const auto& method : info.methods)
 	{
-		ofs << "// 例: " << method.name << " API 関数の実装\n";
-		ofs << "extern \"""C\"" << " __declspec(dllexport) " << method.returnType << " " << className << "_" << method.name << "(uint64_t objectId";
+		bool retIsEnum = IsEnumType(method.returnType, knownEnums, typeMap);
+		std::string exportRetType = retIsEnum ? "int" : method.returnType;
+
+		ofs << "extern \"""C\"" << " __declspec(dllexport) " << exportRetType << " " << className << "_" << method.name << "(uint64_t objectId";
 		for (const auto& param : method.parameters)
 		{
-			ofs << ", " << param.first << " " << param.second;
+			bool paramIsEnum = IsEnumType(param.type, knownEnums, typeMap);
+			std::string exportParamType = paramIsEnum ? "int" : param.type;
+
+			ofs << ", " << exportParamType << " " << param.name;
 		}
 		ofs << ")\n{\n";
 		ofs << "    if (auto comp = Get" << className << "ById(objectId)) {\n";
@@ -230,7 +274,14 @@ void Generater::GenerateSource(const ClassInfo& info, const std::string& outPath
 		// メソッドの呼び出し
 		if (method.returnType != "void")
 		{
-			ofs << "        return comp->" << method.name << "(";
+			if (retIsEnum)
+			{
+				ofs << "        return static_cast<int>(comp->" << method.name << "(";
+			}
+			else
+			{
+				ofs << "        return comp->" << method.name << "(";
+			}
 		}
 		else
 		{
@@ -240,7 +291,15 @@ void Generater::GenerateSource(const ClassInfo& info, const std::string& outPath
 		for (size_t i = 0; i < method.parameters.size(); i++)
 		{
 			const auto& param = method.parameters[i];
-			ofs << param.second;
+			if (IsEnumType(param.type, knownEnums, typeMap))
+			{
+				// int から元の列挙型にキャストして渡す
+				ofs << "static_cast<" << param.type << ">(" << param.name << ")";
+			}
+			else
+			{
+				ofs << param.name;
+			}
 			if (i < method.parameters.size() - 1)
 				ofs << ", ";
 		}
@@ -248,7 +307,14 @@ void Generater::GenerateSource(const ClassInfo& info, const std::string& outPath
 		ofs << "    }\n";
 		if (method.returnType != "void")
 		{
-			ofs << "    return " << method.returnType << "{}; // オブジェクトが見つからない場合の戻り値\n";
+			if (retIsEnum)
+			{
+				ofs << "    return static_cast<int>(" << method.returnType << "{}); // オブジェクトが見つからない場合の戻り値\n";
+			}
+			else
+			{
+				ofs << "    return " << method.returnType << "{}; // オブジェクトが見つからない場合の戻り値\n";
+			}
 		}
 		ofs << "}\n";
 	}
