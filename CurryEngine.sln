@@ -14,10 +14,21 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTK_Desktop_2019", "External\DirectXTK-main\DirectXTK_Desktop_2019.vcxproj", "{E0B52AE7-E160-4D32-BF3F-910B785E5A8E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurryEngine.API", "CurryEngine.API\CurryEngine.API.csproj", "{40A7CD72-073C-A120-B787-2C1B65EF9CF9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{09DEC00C-1561-417C-82A6-5108F76CFF7F} = {09DEC00C-1561-417C-82A6-5108F76CFF7F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineAPI", "EngineAPI\EngineAPI.csproj", "{9C4B4838-000A-CB4A-7AC0-E8B5BEB60683}"
+	ProjectSection(ProjectDependencies) = postProject
+		{09DEC00C-1561-417C-82A6-5108F76CFF7F} = {09DEC00C-1561-417C-82A6-5108F76CFF7F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "UserScripts\Assembly-CSharp.csproj", "{652E0B51-E7B0-ADA2-B194-4ECF02DF8FBB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{09DEC00C-1561-417C-82A6-5108F76CFF7F} = {09DEC00C-1561-417C-82A6-5108F76CFF7F}
+		{40A7CD72-073C-A120-B787-2C1B65EF9CF9} = {40A7CD72-073C-A120-B787-2C1B65EF9CF9}
+		{9C4B4838-000A-CB4A-7AC0-E8B5BEB60683} = {9C4B4838-000A-CB4A-7AC0-E8B5BEB60683}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
