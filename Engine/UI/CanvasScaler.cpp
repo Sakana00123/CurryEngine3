@@ -2,6 +2,7 @@
 #include "CanvasScaler.h"
 #include "RectTransform.h"
 #include <algorithm>
+#include "Engine/Rendering/Pipeline/Graphics.h"
 
 // いずれかのマクロを使用してコンポーネントを登録します。必要に応じて属性も指定できます。
 //REGISTER_COMPONENT(CanvasScaler, "UserScripts")

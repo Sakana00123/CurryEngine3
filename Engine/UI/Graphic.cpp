@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Graphic.h"
+#include "Canvas.h"
 #include "Mask.h"
 
 REGISTER_COMPONENT_WITH_ATTRIBUTES(Graphic, "UI", ComponentAttributes::HideInAddComponentMenu, {})

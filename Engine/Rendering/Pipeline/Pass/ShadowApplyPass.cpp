@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ShadowApplyPass.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Resources/ResourceManager.h"
 #include <profiler.h>
 
 void ShadowApplyPass::Initialize()

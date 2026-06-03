@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "LayoutGroup.h"
+#include "Engine/Core/GameObject.h"
 
 // いずれかのマクロを使用してコンポーネントを登録します。必要に応じて属性も指定できます。
 //REGISTER_COMPONENT(LayoutGroup, "UserScripts")

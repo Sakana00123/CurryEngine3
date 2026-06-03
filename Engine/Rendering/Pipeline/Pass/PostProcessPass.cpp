@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "PostProcessPass.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Resources/ResourceManager.h"
+
 
 void PostProcessPass::Initialize()
 {

@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Rendering/Pipeline/RenderContext.h"
 #include "Engine/Scenes/Scene.h"
+#include "Engine/Rendering/Material.h"
 
 class RenderPass
 {

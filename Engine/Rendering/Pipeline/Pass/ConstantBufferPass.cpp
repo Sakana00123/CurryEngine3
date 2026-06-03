@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "ConstantBufferPass.h"
 #include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Scenes/Scene.h"
+#include "Engine/Rendering/Lights/DirectionalLightComponent.h"
+#include "Engine/Rendering/Lights/PointLightComponent.h"
+#include "Engine/Rendering/Lights/SpotLightComponent.h"
 
 void ConstantBufferPass::Initialize()
 {

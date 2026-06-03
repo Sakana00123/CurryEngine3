@@ -4,6 +4,7 @@
 #include "Engine/Editor/Dialog.h"
 #include "Engine/Resources/ResourceManager.h"
 #include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Rendering/Pipeline/RenderContext.h"
 #include "Engine/Editor/FileOpener.h"
 
 #ifdef USE_IMGUI

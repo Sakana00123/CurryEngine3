@@ -1,6 +1,6 @@
 #pragma once
 #include "UIComponent.h"
-#include "Canvas.h"
+class Canvas;
 
 /**
  * @file

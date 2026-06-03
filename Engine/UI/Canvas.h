@@ -41,14 +41,7 @@ public:
 	 * @brief 初期化処理。
 	 * @details 現在の画面サイズを取得して、キャンバスの `RectTransform::size` を設定します。
 	 */
-	void Initialize() override {
-		float x, y;
-		Graphics::GetScreenSize(x, y);
-		if (GetRectTransform())
-		{
-			GetRectTransform()->size = { x,y };
-		}
-	}
+	void Initialize() override;
 
 	/**
 	 * @brief 毎フレーム更新。
@@ -57,26 +50,7 @@ public:
 	 * - 遅延削除リスト `erases` に入っている `Graphic` を `graphics` から除去。
 	 * - 画面サイズに合わせて `RectTransform` のサイズ/アンカー/位置を固定（中央寄せ）。
 	 */
-	void Update(float elapsedTime) override {
-		if (!erases.empty()) {
-			graphics.erase(std::remove_if(graphics.begin(), graphics.end(),
-				[&](const auto& graphic) {
-					return std::find(erases.begin(), erases.end(), graphic) != erases.end();
-				}),
-				graphics.end());
-			erases.clear();
-		}
-
-		// 位置固定（画面全体にフィット）
-		Vector2 screenSize{ 1920, 1080 };
-		if (RectTransform* rt = GetRectTransform()) {
-			rt->SetSize(screenSize);
-			rt->SetAnchorMin({ 0,0 });
-			rt->SetAnchorMax({ 0,0 });
-			rt->SetPivot({ 0,0 });
-			rt->SetAnchoredPosition({ 0,0 });
-		}
-	}
+	void Update(float elapsedTime) override;
 
 	/**
 	 * @brief 管理している `Graphic` の一覧を取得します。
@@ -108,10 +82,5 @@ public:
 	 * @brief インスペクタ（デバッグ UI）にプロパティを描画します。
 	 * @details `USE_IMGUI` 定義時のみ、管理している `Graphic` 数を表示します。
 	 */
-	void DrawProperty() override {
-#ifdef USE_IMGUI
-		Component::DrawProperty(); // 自動生成されたプロパティ描画を呼び出す
-		ImGui::Text("GraphicsCount:%d", static_cast<int>(GetGraphics().size()));
-#endif // USE_IMGUI
-	}
+	void DrawProperty() override;
 };

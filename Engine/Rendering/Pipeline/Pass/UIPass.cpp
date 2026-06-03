@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "UIPass.h"
+#include "Engine/Resources/ResourceManager.h"
+#include "Engine/Rendering/Pipeline/RenderState.h"
 
 void UIPass::Initialize()
 {

@@ -9,6 +9,7 @@
 #include "Engine/Scripting/ScriptSystem.h"
 #include "Engine/EditorSupport/OrderManager.h"
 #include "Engine/EditorSupport/EditorSelection.h"
+#include <Engine\UI\RectTransform.h>
 
 GameObject::~GameObject() {
     for (auto child : children) {

@@ -6,6 +6,7 @@
 #include "Engine/Core/Time.h"
 #include "Engine/Scenes/Scene.h"
 #include "Engine/Scenes/SceneManager.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
 
 void EditorCamera::Initialize()
 {

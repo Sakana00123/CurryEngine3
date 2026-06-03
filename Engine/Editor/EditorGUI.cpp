@@ -5,6 +5,7 @@
 
 #include "Engine/Scenes/Scene.h"
 #include "Engine/Core/GameObject.h"
+#include "Engine/UI/Canvas.h"
 #include "Dialog.h"
 #include "Engine/Rendering/Renderers/GltfModelRenderer.h"
 #include "Engine/Scenes/SceneManager.h"

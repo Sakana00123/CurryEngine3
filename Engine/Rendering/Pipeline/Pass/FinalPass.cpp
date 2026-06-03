@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "FinalPass.h"
 #include "Engine/Rendering/Pipeline/Graphics.h"
+#include <Engine\Core\EnginePaths.h>
 
 void FinalPass::Initialize()
 {

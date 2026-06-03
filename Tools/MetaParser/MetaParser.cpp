@@ -29,7 +29,8 @@ int main(int argc, char** argv)
 	}
 
 	// パーサーを作成してディレクトリを解析し、JSON 出力
-	Parser parser(outputJson);
+	std::string jsonOutputDir = outputJson + "/Json";
+	Parser parser(jsonOutputDir);
 	std::vector<FileInfo> allFiles;
 	for (const auto& dir : inputDirs)
 	{

@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "PFX_CrtPass.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Resources/ResourceManager.h"
 
 void PfxCrtPass::Initialize()
 {

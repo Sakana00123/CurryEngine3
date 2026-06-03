@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SkyBoxPass.h"
 #include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Resources/ResourceManager.h"
 
 void SkyBoxPass::Initialize()
 {

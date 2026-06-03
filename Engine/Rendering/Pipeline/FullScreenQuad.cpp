@@ -4,6 +4,7 @@
 #include "Engine/Resources/Shader.h"
 #include "Engine/Rendering/Material.h"
 #include "Engine/Core/EnginePaths.h"
+#include "RenderContext.h"
 
 FullScreenQuad::FullScreenQuad(ID3D11Device* device)
 {

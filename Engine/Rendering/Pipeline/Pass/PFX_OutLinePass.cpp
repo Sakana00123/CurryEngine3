@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "PFX_OutLinePass.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Resources/ResourceManager.h"
+
 
 void PFX_OutLinePass::Initialize()
 {

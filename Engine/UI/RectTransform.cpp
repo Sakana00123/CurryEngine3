@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "RectTransform.h"
 #include "Engine/Utils/RectTransformUtils.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
 #include "Canvas.h"
 
 REGISTER_COMPONENT_WITH_ATTRIBUTES(RectTransform, "UI", ComponentAttributes::DisallowMultiple | ComponentAttributes::HideInAddComponentMenu | ComponentAttributes::ExecuteInEditMode, {});

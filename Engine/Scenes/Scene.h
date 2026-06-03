@@ -4,12 +4,11 @@
 #include "Engine/Core/GameObject.h"
 #include "Engine/EditorSupport/UndoRedoStack.h"
 
-#include "Engine/UI/Slider.h"
 #include "Engine/Core/Component.h"
 #include "Engine/Rendering/Camera/CameraSystem.h"
-#include "Engine/Rendering/Lights/DirectionalLightComponent.h"
-#include "Engine/Rendering/Lights/PointLightComponent.h"
-#include "Engine/Rendering/Lights/SpotLightComponent.h"
+class DirectionalLightComponent;
+class PointLightComponent;
+class SpotLightComponent;
 
 /**
  * @file

@@ -9,7 +9,7 @@ public class TestBehaviour : Behaviour
     [SerializeField] private float volume = 0.3f;
     [SerializeField] private AudioSource? audioSource;
 
-    Rigidbody? rigidbody = null;
+    [SerializeField] Rigidbody? rigidbody = null;
 
     public override void OnEnable()
     {
@@ -24,7 +24,7 @@ public class TestBehaviour : Behaviour
         transform.rotation = Quaternion.identity;
 
         // Rigidbodyコンポーネントを取得して保存
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
     }
     public override void Update()
     {

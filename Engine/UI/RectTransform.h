@@ -1,9 +1,6 @@
 #pragma once
 #include "Engine/Core/Component.h"
 #include "Engine/Core/Transform.h"
-#include "Engine/Rendering/Pipeline/Graphics.h"
-#include "Engine/Core/GameObject.h"
-#include "Engine/Utils/RectTransformUtils.h"
 
 /**
  * @file

@@ -271,10 +271,10 @@ void Framework::Update(float deltaTime/*Elapsed seconds from last frame*/)
         InputSystem::Update(Time::UnscaledDeltaTime());
     }
 #ifdef _DEBUG
-	else if (!AssetBrowser::IsExternalDragActive()) // フォーカスがない場合は、SleepしてCPU使用率を下げる(Debug時のみ)
-    {
-        Sleep(100);
-    }
+	//else if (!AssetBrowser::IsExternalDragActive()) // フォーカスがない場合は、SleepしてCPU使用率を下げる(Debug時のみ)
+ //   {
+ //       Sleep(100);
+ //   }
 #endif // _DEBUG
 
 

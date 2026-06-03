@@ -4,9 +4,10 @@
 #include "Engine/Resources/Shader.h"
 #include "Engine/Resources/Texture.h"
 #include "Engine/Core/Color.h"
-#include "Engine/Rendering/Pipeline/RenderContext.h"
 #include "Engine/Rendering/Pipeline/RenderState.h"
 #include <json.hpp>
+
+struct RenderContext;
 using json = nlohmann::json;
 
 /**

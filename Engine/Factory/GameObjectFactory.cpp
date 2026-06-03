@@ -23,8 +23,10 @@
 #include "Engine/Audio/Audio.h"
 #include "Engine/Audio/AudioSource.h"
 #include "Engine/Rendering/Camera/CameraComponent.h"
+#include "Engine/Rendering/Lights/DirectionalLightComponent.h"
 #include "Engine/Rendering/Lights/PointLightComponent.h"
 #include "Engine/Rendering/Lights/SpotLightComponent.h"
+#include "Engine/Utils/RectTransformUtils.h"
 
 GameObject* GameObjectFactory::Create(Scene* scene, const std::string& name) {
 	std::shared_ptr<GameObject> object = std::make_shared<GameObject>();

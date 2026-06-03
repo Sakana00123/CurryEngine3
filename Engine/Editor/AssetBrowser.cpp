@@ -16,6 +16,9 @@
 #include "Engine/Scenes/SceneManager.h"
 #include "Engine/Scenes/Scene.h"
 #include "Engine/EditorSupport/VcxprojHelper.h"
+#include <Engine\Core\EnginePaths.h>
+#include <Engine\Resources\ResourceManager.h>
+#include "Dialog.h"
 
 void AssetBrowser::Initialize()
 {

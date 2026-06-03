@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "TransitionPass.h"
+#include "Engine/Rendering/Pipeline/Graphics.h"
+#include "Engine/Resources/ResourceManager.h"
+
 
 void TransitionPass::Initialize()
 {

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DebugRenderPass.h"
 #include "Engine/Rendering/Renderers/DebugRenderer.h"
+#include "Engine/Rendering/Pipeline/RenderState.h"
 #include "Engine/Physics/Physics.h"
 
 void DebugRenderPass::Initialize()
