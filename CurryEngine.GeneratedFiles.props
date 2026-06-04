@@ -29,13 +29,13 @@
   ============================================================ -->
   <ItemGroup>
     <!-- Interop 層 (Export関数) -->
-	<ClCompile Include="$(GeneratedInteropDir)\*.generated.cpp">
+	<_WildCardClCompile Include="$(GeneratedInteropDir)\*.generated.cpp">
 	  <PrecompiledHeader>NotUsing</PrecompiledHeader>
-	</ClCompile>
+	</_WildCardClCompile>
 
     <!-- Reflection 層 (REGISTER_CLASS 展開) -->
     <!-- .generated.h はヘッダーなので ClInclude として認識させる -->
-    <ClInclude Include="$(GeneratedReflectionDir)\*.generated.h" />
+    <_WildCardClInclude Include="$(GeneratedReflectionDir)\*.generated.h" />
   </ItemGroup>
 
   <!-- ============================================================
