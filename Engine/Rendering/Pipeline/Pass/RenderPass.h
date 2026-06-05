@@ -28,12 +28,19 @@ public:
 	// レンダーターゲットのリサイズイベントを処理するための関数
 	void OnSizeChanged(ID3D11Device* device, uint32_t width, uint32_t height);
 
+	// デバッグ用のパス名を設定するための関数
+	void SetRenderPassName(const char* name) { renderPassName = name; }
+
+	// デバッグ用のパス名を取得するための関数
+	const char* GetRenderPassName() const { return renderPassName; }
+
 protected:
 
 	// レンダーターゲットのリサイズが必要な場合に、リストに追加するための関数
 	void RegisterResizableRenderTexture(RenderTexture* rt);
 
 private:
+	friend class RenderPipeline;
 	std::vector<RenderTexture*> resizableRenderTargets; // リサイズが必要なレンダーターゲットのリスト
-
+	const char* renderPassName = "Unnamed Pass"; // デバッグ用のパス名
 };

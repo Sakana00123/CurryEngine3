@@ -44,6 +44,10 @@ CONST LONG SHADOWMAP_HEIGHT{ 2048 };
 
 Framework::Framework(HWND hwnd)
 {
+    //プロファイラ初期化
+    ProfileInitialize(&isPaused, Framework::SetPause, ImGuiControl::Profiler::DefaultMaxThreads);
+    ProfileThreadName(0, "Main Thread");
+
     Graphics::Initialize(hwnd, FULLSCREEN);
     InputSystem::Initialize();
     //EffectManager::Initialize();
@@ -81,10 +85,6 @@ bool Framework::Initialize()
 
     //エフェクトエディタ初期化
     EffectEditor::Initialize();
-
-    //プロファイラ初期化
-    ProfileInitialize(&isPaused, Framework::SetPause, ImGuiControl::Profiler::DefaultMaxThreads);
-    ProfileThreadName(0, "Main Thread");
 
     // エディタカメラ初期化
     EditorCamera::Initialize();
@@ -232,7 +232,7 @@ LRESULT CALLBACK Framework::HandleMessage(HWND hwnd, UINT msg, WPARAM wparam, LP
 void Framework::BeginFrame()
 {
 	// フレーム開始処理
-     {
+    {
          SceneManager::BeginFrame();
 	}
 }

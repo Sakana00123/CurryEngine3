@@ -186,6 +186,8 @@ void ObjectManager::PreUpdate(float deltaTime)
 	}
 	// コンポーネントキャッシュを更新
 	{
+		ProfileScopedSection_2(0, "UpdateComponentCache", ImGuiControl::Profiler::Color::Green);
+
 		componentCacheMap.clear();
 		for (auto& object : objects) {
 			if (!object) continue;

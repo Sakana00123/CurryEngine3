@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "RenderPipeline.h"
 #include "Engine/Rendering/Pipeline/Graphics.h"
+#include <profiler.h>
 
 // NOTE: 各描画パスのヘッダーファイルをインクルードする必要があります。
 #include "Engine/Rendering/Pipeline/Pass/OpaquePass.h"
@@ -25,18 +26,24 @@
 
 void RenderPipeline::Initialize()
 {
+	ProfileScopedSection_3(0, "RenderPipeline::Initialize", ImGuiControl::Profiler::Color::Yellow);
+
 	// 描画パイプラインの初期化処理
 	for (const auto& pass : m_renderPasses)
 	{
+		ProfileScopedSection_3(0, pass->renderPassName, ImGuiControl::Profiler::Color::Yellow);
 		pass->Initialize();
 	}
 }
 
 void RenderPipeline::Finalize()
 {
+	ProfileScopedSection_3(0, "RenderPipeline::Finalize", ImGuiControl::Profiler::Color::Yellow);
+
 	// 描画パイプラインの終了処理
 	for (const auto& pass : m_renderPasses)
 	{
+		ProfileScopedSection_3(0, pass->renderPassName, ImGuiControl::Profiler::Color::Yellow);
 		pass->Finalize();
 	}
 	// 描画パスのリストをクリア
@@ -45,18 +52,24 @@ void RenderPipeline::Finalize()
 
 void RenderPipeline::Execute(RenderContext* rtx, Scene* scene)
 {
+	ProfileScopedSection_3(0, "RenderPipeline::Execute", ImGuiControl::Profiler::Color::Yellow);
+
 	// 描画パイプラインの実行処理
 	for (const auto& pass : m_renderPasses)
 	{
+		ProfileScopedSection_3(0, pass->renderPassName, ImGuiControl::Profiler::Color::Yellow);
 		pass->Execute(rtx, scene);
 	}
 }
 
 void RenderPipeline::DrawProperty()
 {
+	ProfileScopedSection_3(0, "RenderPipeline::DrawProperty", ImGuiControl::Profiler::Color::Yellow);
+
 	// 描画パイプラインのプロパティ描画処理
 	for (const auto& pass : m_renderPasses)
 	{
+		ProfileScopedSection_3(0, pass->renderPassName, ImGuiControl::Profiler::Color::Yellow);
 		pass->DrawProperty();
 	}
 }
@@ -66,15 +79,19 @@ void RenderPipeline::OnSizeChanged(ID3D11Device* device, uint32_t width, uint32_
 	// 最小化時（0x0）は無視
 	if (width == 0 || height == 0) return;
 
+	ProfileScopedSection_3(0, "RenderPipeline::OnSizeChanged", ImGuiControl::Profiler::Color::Yellow);
+
 	// 描画パイプラインのサイズ変更イベント処理
 	for (const auto& pass : m_renderPasses)
 	{
+		ProfileScopedSection_3(0, pass->renderPassName, ImGuiControl::Profiler::Color::Yellow);
 		pass->OnSizeChanged(device, width, height);
 	}
 }
 
 void RenderPipeline::AddRenderPass(std::unique_ptr<RenderPass> pass)
 {
+	pass->SetRenderPassName(typeid(*pass).name()); // デバッグ用にパス名を設定
 	m_renderPasses.push_back(std::move(pass));
 }
 
