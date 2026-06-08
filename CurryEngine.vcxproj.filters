@@ -1,0 +1,1497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Archive\geometric_primitive.cpp">
+      <Filter>Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="Archive\gltf_model.cpp">
+      <Filter>Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="Archive\skinned_mesh.cpp">
+      <Filter>Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="Archive\sprite.cpp">
+      <Filter>Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="Archive\sprite_batch.cpp">
+      <Filter>Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="Archive\static_mesh.cpp">
+      <Filter>Archive</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\BuildSettings.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ProjectSettings.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\main.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Animation\RhythmAnimationController.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Animation\RhythmStateMachine.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\3DAudio.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\AudioAnalyzer.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\AudioListener.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\BeatManager.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\Audio.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\AudioSource.cpp">
+      <Filter>Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\ThirdPerty\kfc.c">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\ThirdPerty\kiss_fft.c">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\ThirdPerty\kiss_fftnd.c">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\ThirdPerty\kiss_fftndr.c">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\ThirdPerty\kiss_fftr.c">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Automation\SolutionGenerator.cpp">
+      <Filter>Engine\Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Layer.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\ObjectId.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\ScriptComponent.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Time.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Color.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Component.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Framework.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\GameObject.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\ObjectManager.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Transform.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Math\Quaternion.cpp">
+      <Filter>Engine\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Math\Vector2.cpp">
+      <Filter>Engine\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Math\Vector3.cpp">
+      <Filter>Engine\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Reflection\Meta.cpp">
+      <Filter>Engine\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Reflection\TypeSerializerRegistry.cpp">
+      <Filter>Engine\Core\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\BuildSettingsWindow.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\AnimationEditor.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\AssetBrowser.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\Console.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\Dialog.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\EditorGUI.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\EffectEditor.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\FileOpener.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\History.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\HlslEditor.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\ImGuiTheme.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\SceneParametersEditor.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\Timeline.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\FixedJoint.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\HingeJoint.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\BoxCollider.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\CapsuleCollider.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\MeshCollider.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Physics.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\SphereCollider.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Collider.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Physics\Rigidbody.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Material.cpp">
+      <Filter>Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\RenderContext.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\RenderPipeline.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\RenderSystem.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\FullScreenQuad.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Graphics.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\RenderState.cpp">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\PFX_CrtPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\PFX_OutLinePass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\PostProcessPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\RenderPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\TransitionPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\ConstantBufferPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\DebugRenderPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\FinalPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\OpaquePass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\ParticlePass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\PreRenderPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\ShadowApplyPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\ShadowMapPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\SkyBoxPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Pipeline\Pass\UIPass.cpp">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Renderers\TrailRenderer.cpp">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Renderers\DebugRenderer.cpp">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Renderers\Renderer.cpp">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Renderers\GltfModelRenderer.cpp">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Renderers\PrimitiveRenderer.cpp">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Renderers\Skymap.cpp">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffers\RenderTexture.cpp">
+      <Filter>Engine\Rendering\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffers\CascadedShadowMaps.cpp">
+      <Filter>Engine\Rendering\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Buffers\FrameBuffer.cpp">
+      <Filter>Engine\Rendering\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\CameraComponent.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\CameraSystem.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\EditorCamera.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Camera\ThirdPersonCameraController.cpp">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Lights\DirectionalLightComponent.cpp">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Lights\PointLightComponent.cpp">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Rendering\Lights\SpotLightComponent.cpp">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\ScriptHost.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\ScriptSystem.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\ScriptWatcher.cpp">
+      <Filter>Engine\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\GameObjectExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\TransformExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\CameraExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\ComponentExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\InputExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\LoggerExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\ScriptExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scripting\Exports\TimeExports.cpp">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\CanvasScaler.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Graphic.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\GridLayoutGroup.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\HorizontalLayoutGroup.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\LayoutGroup.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\ScrollView.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\VerticalLayoutGroup.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Slider.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Toggle.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Button.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Canvas.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\GraphicRaycaster.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Image.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\InputField.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Mask.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\RectTransform.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Selectable.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\Text.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIAnimationController.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\UI\UIComponent.cpp">
+      <Filter>Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\BeatScaler2DComponent.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\BeatScalerComponent.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\EasingColor.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\EasingTransform.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\EasingUI.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\Tween.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\EasingComponent.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Easing\EasingHandler.cpp">
+      <Filter>Engine\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\ImGuiHelpers.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\ComponentFactory.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\CompoundCommand.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\EditorSelection.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\OrderManager.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\VcxprojHelper.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EditorSupport\VSProjectReloader.cpp">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Effects\ComputeParticleSystem.cpp">
+      <Filter>Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Effects\EffectManager.cpp">
+      <Filter>Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Effects\ParticleComponent.cpp">
+      <Filter>Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Factory\GameObjectFactory.cpp">
+      <Filter>Engine\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Factory\ScriptFactory.cpp">
+      <Filter>Engine\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\AnimationClip.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\ResourceManager.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Shader.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Resources\Texture.cpp">
+      <Filter>Engine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scenes\SceneMigrator.cpp">
+      <Filter>Engine\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scenes\Scene.cpp">
+      <Filter>Engine\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scenes\SceneManager.cpp">
+      <Filter>Engine\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Events\PointerEventData.cpp">
+      <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Events\RaycastResult.cpp">
+      <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Events\BaseInputModule.cpp">
+      <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Events\EventSystem.cpp">
+      <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Events\InputModule.cpp">
+      <Filter>Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\InputSystem.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utils\UniqueIdGenerator.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utils\RectTransformUtils.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\ImGradientHDR.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\implot.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\implot_demo.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\implot_items.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\ImCurveEdit.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\ImGradient.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\ImGuizmo.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_demo.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_draw.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_impl_dx11.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_impl_win32.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_ja_gryph_ranges.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_tables.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imgui_widgets.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\imnodes.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\ImSequencer.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\profiler.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui-docking\timer.cpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Archive\geometric_primitive.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive\gltf_model.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive\high_resolution_timer.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive\skinned_mesh.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive\sprite.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive\sprite_batch.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive\static_mesh.h">
+      <Filter>Archive</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\BuildSettings.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ProjectSettings.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\RhythmAnimationController.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\RhythmAnimationClip.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\RhythmAnimState.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\RhythmStateMachine.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\StateTransition.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\3DAudio.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\AudioAnalyzer.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\AudioListener.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\BeatManager.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\Audio.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\AudioSource.h">
+      <Filter>Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kfc.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kissfft.hh">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kissfft_i32.hh">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kiss_fft.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kiss_fftnd.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kiss_fftndr.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kiss_fftr.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\kiss_fft_log.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\ThirdPerty\_kiss_fft_guts.h">
+      <Filter>Engine\Audio\ThirdPerty</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Automation\SolutionGenerator.h">
+      <Filter>Engine\Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\EnginePaths.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Layer.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\ObjectId.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\ScriptComponent.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Color.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Component.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Framework.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\GameObject.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Misc.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Object.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\ObjectManager.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\PersistentObjectManager.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Time.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Transform.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Math\Quaternion.h">
+      <Filter>Engine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Math\BoundingBox.h">
+      <Filter>Engine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Math\Vector2.h">
+      <Filter>Engine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Math\Vector3.h">
+      <Filter>Engine\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Reflection\TypeSerializerRegistry.h">
+      <Filter>Engine\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Reflection\Meta.h">
+      <Filter>Engine\Core\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\BuildSettingsWindow.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\AnimationEditor.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\AnimationTimeline.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\AssetBrowser.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\AssetBrowserDropTarget.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\Dialog.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\EditorGUI.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\EffectEditor.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\FileOpener.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\History.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\HlslEditor.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\Console.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\ImGuiTheme.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\SceneParametersEditor.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\Timeline.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\FixedJoint.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\HingeJoint.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\BoxCollider.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CapsuleCollider.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\CollisionEvent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\MeshCollider.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Physics.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\SphereCollider.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Collider.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Physics\Rigidbody.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Material.h">
+      <Filter>Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\LightData.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\RenderPipeline.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\RenderSystem.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\RenderContext.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\FullScreenQuad.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Graphics.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\RenderState.h">
+      <Filter>Engine\Rendering\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\PFX_CrtPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\PFX_OutLinePass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\PostProcessPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\TransitionPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\ConstantBufferPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\DebugRenderPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\FinalPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\OpaquePass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\ParticlePass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\PreRenderPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\RenderPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\ShadowApplyPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\ShadowMapPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\SkyBoxPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Pipeline\Pass\UIPass.h">
+      <Filter>Engine\Rendering\Pipeline\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\TrailRenderer.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\DebugRenderer.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\GltfModelRenderer.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\PrimitiveRenderer.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\Renderer.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\Skymap.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Renderers\SpriteRenderer.h">
+      <Filter>Engine\Rendering\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffers\RenderTexture.h">
+      <Filter>Engine\Rendering\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffers\CascadedShadowMaps.h">
+      <Filter>Engine\Rendering\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Buffers\FrameBuffer.h">
+      <Filter>Engine\Rendering\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\ThirdPersonCameraController.h">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\CameraComponent.h">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\CameraSystem.h">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Camera\EditorCamera.h">
+      <Filter>Engine\Rendering\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Lights\DirectionalLightComponent.h">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Lights\LightBase.h">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Lights\PointLightComponent.h">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Rendering\Lights\SpotLightComponent.h">
+      <Filter>Engine\Rendering\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scripting\ScriptFieldSerializer.h">
+      <Filter>Engine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scripting\ScriptHost.h">
+      <Filter>Engine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scripting\ScriptWatcher.h">
+      <Filter>Engine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scripting\ScriptSystem.h">
+      <Filter>Engine\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scripting\Exports\ScriptBridgeTypes.h">
+      <Filter>Engine\Scripting\Exports</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\CanvasScaler.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\GridLayoutGroup.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\HorizontalLayoutGroup.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\LayoutGroup.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\VerticalLayoutGroup.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Button.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Canvas.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Graphic.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\GraphicRaycaster.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Image.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\InputField.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Mask.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\RectTransform.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\ScrollView.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Selectable.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Slider.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Text.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\Toggle.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIAnimationController.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\UI\UIComponent.h">
+      <Filter>Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\BeatScaler2DComponent.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\BeatScalerComponent.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\EasingColor.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\EasingTransform.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\EasingUI.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\Tween.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\easing.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\EasingComponent.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Easing\EasingHandler.h">
+      <Filter>Engine\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\CompoundCommand.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\EditorSelection.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\IEditorCommand.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\ImGuiHelpers.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\OrderManager.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\SetValueCommand.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\UndoRedoStack.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\VcxprojHelper.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\VSProjectReloader.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\AutoRegisterComponent.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EditorSupport\ComponentFactory.h">
+      <Filter>Engine\EditorSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Attributes\ComponentAttributes.h">
+      <Filter>Engine\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Effects\ComputeParticleSystem.h">
+      <Filter>Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Effects\EffectManager.h">
+      <Filter>Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Effects\ParticleComponent.h">
+      <Filter>Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Factory\GameObjectFactory.h">
+      <Filter>Engine\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Factory\ScriptFactory.h">
+      <Filter>Engine\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\AnimationClip.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Shader.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Texture.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\Resource.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Resources\ResourceManager.h">
+      <Filter>Engine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\SceneMigrator.h">
+      <Filter>Engine\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\Scene.h">
+      <Filter>Engine\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\SceneManager.h">
+      <Filter>Engine\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\AxisEventData.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\BaseEventData.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\BaseInputModule.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\Event.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\EventHandlers.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\EventSequence.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\EventSystem.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\InputModule.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\PointerEventData.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Events\RaycastResult.h">
+      <Filter>Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\InputSystem.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\JsonUtils.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\JsonFileHandler.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\RectTransformUtils.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\stdUtiles.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\UniqueIdGenerator.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\ImGradientHDR.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\implot.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\implot_internal.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imconfig.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\ImCurveEdit.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\ImGradient.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imgui.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\ImGuizmo.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imgui_curve.hpp">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imgui_impl_dx11.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imgui_impl_win32.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imgui_internal.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imnodes.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imnodes_internal.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\ImSequencer.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imstb_rectpack.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imstb_textedit.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\imstb_truetype.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\profiler.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui-docking\timer.h">
+      <Filter>External\imgui-docking</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\ReflectionGenerated.h">
+      <Filter>Generated</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\BackgroundShaderPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\blur_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\CascadedShadowPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleBeginFrameCS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleBitonicSortB2CS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleBitonicSortC2CS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleEmitCS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleEndFrameCS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleInitCS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleRenderGS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleRenderPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleRenderVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleSortCS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ComputeParticleUpdateCS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DebugRendererPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\debug_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DebugRendererVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\FinalPassPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\fullscreen_quad_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\fullscreen_quad_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\geometric_primitive_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\geometric_primitive_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\gltf_model_csm_gs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\gltf_model_csm_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\gltf_model_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\gltf_model_static_batching_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\gltf_model_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\luminance_extraction_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\OutLinePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\OutLineVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PFX_CrtPassPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\pin.ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ShaderToyPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\skinned_mesh_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\skinned_mesh_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\skybox_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\skymap_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\skymap_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SpriteMaskPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\sprite_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\sprite_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\static_mesh_ps.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\static_mesh_vs.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\TransitionPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+    <None Include="Shader\bidirectional_reflectance_distribution_function.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\ComputeParticle.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\ComputeParticleBitonicSort.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Constants.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\DebugRenderer.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\fullscreen_quad.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\geometric_primitive.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\gltf_model.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\image_based_lighting.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Lights.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\OutLine.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\Sampler.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\ShaderFunctions.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\skinned_mesh.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\skymap.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\sprite.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\static_mesh.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Archive">
+      <UniqueIdentifier>{2b39edbc-415f-4d63-8931-61548451ca4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{5298dccd-27a5-4856-9d39-119947576a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Animation">
+      <UniqueIdentifier>{a00e6a2b-4a9c-4e3f-9517-202d2d45d7c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio">
+      <UniqueIdentifier>{9db3cc23-325b-4e8d-b78e-9c18235c9181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Audio\ThirdPerty">
+      <UniqueIdentifier>{06a78529-fdd9-45af-8b20-3721f2b8e1ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Automation">
+      <UniqueIdentifier>{76225cbb-1d78-4886-9510-f310811061eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core">
+      <UniqueIdentifier>{9fc6cd7a-ad62-4af9-b372-39bdfff1e970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Math">
+      <UniqueIdentifier>{6947351a-3f6f-4b61-b2dc-5c33e9c4672d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Reflection">
+      <UniqueIdentifier>{aab91c9b-24d4-4506-a107-584b1602bc8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor">
+      <UniqueIdentifier>{85c40ab6-3bd5-49ce-bbd3-cea549a1ccba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{f22246cc-8eee-400c-b6dd-9e38f84a843b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering">
+      <UniqueIdentifier>{087e6a1e-3b2d-4ecc-9b47-17cd9b79b3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Pipeline">
+      <UniqueIdentifier>{3a4c06a5-3f11-4ac0-a299-53b932de52b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Pipeline\Pass">
+      <UniqueIdentifier>{023fed84-0f43-4801-bcda-9e7fa8d2c6f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Renderers">
+      <UniqueIdentifier>{2e5b5395-ff57-489c-9a8a-02a013de098c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Buffers">
+      <UniqueIdentifier>{fa0e2c9e-4061-47b2-8ba1-ec64635695b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Camera">
+      <UniqueIdentifier>{26e977b9-d38f-4348-a85b-eec155245f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Rendering\Lights">
+      <UniqueIdentifier>{040845e0-c7da-473f-bdd2-578b799d2c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scripting">
+      <UniqueIdentifier>{689d0c19-c773-4874-b265-846bbed432ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scripting\Exports">
+      <UniqueIdentifier>{4c4d0b2e-faec-4900-ab8f-df660823fce3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI">
+      <UniqueIdentifier>{5044bbab-e0bb-4ccb-af5e-3f88421588a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Easing">
+      <UniqueIdentifier>{56a9b81f-6f74-43a0-9748-3b02b79a8245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\EditorSupport">
+      <UniqueIdentifier>{505b548b-d316-4bd4-966a-e9d02cc6ce58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Attributes">
+      <UniqueIdentifier>{232e0538-3b7e-4853-90dc-67884548c729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Effects">
+      <UniqueIdentifier>{956da185-0370-4101-ade3-bb0f76f4d36a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Factory">
+      <UniqueIdentifier>{d816e21b-e9fb-4541-956d-d34da2e6fcd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Resources">
+      <UniqueIdentifier>{e00465b8-8e65-4909-b566-5e4a7a5008fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scenes">
+      <UniqueIdentifier>{9b635708-b179-462a-851a-568815988035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Events">
+      <UniqueIdentifier>{eab83a0b-3766-4855-8fe1-0fa39faebc7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{aed30d19-004f-4dae-a5d2-4bcefac1959f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utils">
+      <UniqueIdentifier>{643e6671-b96a-40e6-8bd2-b147888ceaf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{c24bd21b-0245-4634-bf2d-e0b901fa0a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\imgui-docking">
+      <UniqueIdentifier>{7462ceb3-efe7-4f26-a33c-c68b16ed8be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated">
+      <UniqueIdentifier>{69654ab7-e5d3-4bb8-971b-4157d588a76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{9b37302d-bdfd-41c8-a343-ec9bac619831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BuildSetting">
+      <UniqueIdentifier>{960c0c86-34e8-496b-b184-deab9a3af3e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="BuildSetting\icon.rc">
+      <Filter>BuildSetting</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -9,8 +9,8 @@ VS_OUT main( float3 position : POSITION, float3 normal : NORMAL)
     float3 worldPosition = mul(float4(position, 1.0), world).xyz;
     float3 worldNormal = normalize(mul(float4(normal, 0.0), world).xyz);
     
-    float4 N = normalize(mul(float4(normal, 0.0), world));
-    float4 L = normalize(directionalLightDirection);
+    float3 N = worldNormal;
+    float3 L = normalize(-directionalLightDirection.xyz);
     float3 C = directionalLightColor.rgb;
     float3 K = materialColor.rgb;
     
@@ -18,9 +18,9 @@ VS_OUT main( float3 position : POSITION, float3 normal : NORMAL)
     
     //vout.color.rgb = materialColor.rgb * max(0, LightColor * dot(L, N));
     //vout.color.rgb = CalcLambert(N.xyz, L.xyz, C, K);
+    vout.color.rgb = ClacHalfLambert(N, -L, C, K);
     
     // DirectionalLightの適用
-    vout.color.rgb = ClacHalfLambert(N.xyz, L.xyz, C, K);
     
     // PointLightの適用
     float3 pointDiffuse = float3(0, 0, 0);
@@ -34,6 +34,7 @@ VS_OUT main( float3 position : POSITION, float3 normal : NORMAL)
     CalcSpotLights(worldPosition, spotDiffuse, spotSpecular);
     vout.color.rgb += spotDiffuse * K;
     
+    //vout.color.rgb = worldNormal * 0.5f + 0.5f; // 法線を色として出力（デバッグ用）
     // アルファ値は定数
     vout.color.a = materialColor.a;
 	return vout;

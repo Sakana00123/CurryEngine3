@@ -502,10 +502,11 @@ void Rigidbody::DrawProperty()
 	ImGui::SeparatorText(reinterpret_cast<const char*>(u8"テスト用"));
 
 	// テスト用の力を加えるボタン
-	if (ImGui::Button("Add Force Up"))
+	static Vector3 testForce(0, 10, 0);
+	ImGui::InputFloat3("Test Force", &testForce.x);
+	if (ImGui::Button("Add Force"))
 	{
-		// 上方向に力を加える処理をここに追加します。
-		AddForce(Vector3(0, 1000, 0), ForceMode::Impulse);
+		AddForce(testForce, ForceMode::Impulse);
 	}
 
 #endif // USE_IMGUI

@@ -41,7 +41,7 @@
 #*.exe
 *.out
 *.app
-*.filters
+#*.filters
 x64/
 .vs/
 reflection_capture_tool/

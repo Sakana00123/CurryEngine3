@@ -794,26 +794,26 @@ void Component::DrawProperty()
 
 
 		// テスト用で関数呼び出しのImGui::Buttonを追加
-		if (ImGui::CollapsingHeader("Test Functions"))
-		{
-			for (const auto& meta : classMetas)
-			{
-				if (!meta)
-					continue;
+		//if (ImGui::CollapsingHeader("Test Functions"))
+		//{
+		//	for (const auto& meta : classMetas)
+		//	{
+		//		if (!meta)
+		//			continue;
 
-				for (const auto& func : meta->methods)
-				{
-					if (!func.invoker)
-						continue; // 関数が呼び出せない場合はスキップ
-					ImGui::PushID(func.name.c_str());
-					if (ImGui::Button(func.name.c_str()))
-					{
-						func.InvokeVoid(this, {}); // 引数なしで関数を呼び出す
-					}
-					ImGui::PopID();
-				}
-			}
-		}
+		//		for (const auto& func : meta->methods)
+		//		{
+		//			if (!func.invoker)
+		//				continue; // 関数が呼び出せない場合はスキップ
+		//			ImGui::PushID(func.name.c_str());
+		//			if (ImGui::Button(func.name.c_str()))
+		//			{
+		//				func.InvokeVoid(this, {}); // 引数なしで関数を呼び出す
+		//			}
+		//			ImGui::PopID();
+		//		}
+		//	}
+		//}
 
 
 	}
